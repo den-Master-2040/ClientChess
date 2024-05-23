@@ -16,12 +16,20 @@ public:
     ~Form_group();
     void join();
     void createGroup ();
+    void connectUser (QString name);
+    void messageAnothetUser(QString msg);
+    void disconnectAnother();
+
 private slots:
     void on_pushButton_2_clicked();
 
     void on_pushButton_4_clicked();
 
     void on_pb_create_group_clicked();
+
+    void on_pushButton_clicked();
+
+    void on_pushButton_3_clicked();
 
 private:
     Ui::Form_group *ui;

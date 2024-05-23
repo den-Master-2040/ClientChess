@@ -14,7 +14,7 @@ network_object::network_object(QObject *parent) : QObject(parent)
         {
             //qDebug() << "unconnected state";
             socket->connectToHost("127.0.0.1", 2323);
-            SendToServer("Login, my login=" + login + " my token=" + token + " ");
+            SendToServer("Login, my login=" + REF_CLIENT.getUserData()->getName() + " my token=" + REF_CLIENT.getUserData()->getPasword() + " ");
             REF_CLIENT.getMainmenu()->setConnections(false);
         }
         else
@@ -121,8 +121,9 @@ void network_object::RequaredRecvMessage(QString message)
                 REF_CLIENT.setGroupsMenu();
 
             }
-            } //else
-                //emit signalendDataGroup();
+            }
+            if(message.at(1) == 'C' && message.at(2) == 'T')
+                REF_CLIENT.getGroupMenu()->disconnectAnother();
             break;
         }
         case 'C':
@@ -133,17 +134,16 @@ void network_object::RequaredRecvMessage(QString message)
                 for(int i = 3; i < message.size(); i++)
                     lsu += message.at(i);
 
-                login_secondUser = lsu;
-                qDebug() << "login_secondUser: " << login_secondUser;
-                //emit signalSecondLogin();
+
+                qDebug() << "login_secondUser: " << lsu;
+                REF_CLIENT.getGroupMenu()->connectUser(lsu);
             }
             break;
         }
         case 'T':
         {
             message.remove(0, 1);
-            messageToUser = message;
-            //emit signalRecvMessageFromAnotherUser();
+            REF_CLIENT.getGroupMenu()->messageAnothetUser(message);
             break;
         }
         case 'H'://hod
@@ -151,6 +151,12 @@ void network_object::RequaredRecvMessage(QString message)
             message.remove(0,1);
             hod = message;
             //emit signalHod();
+            break;
+        }
+        case 'G':
+        {
+            if(message.at(1) == 'O')
+                REF_CLIENT.getMainWindow()->setCurrentWidget_(REF_CLIENT.getFormGame());
             break;
         }
         default:break;

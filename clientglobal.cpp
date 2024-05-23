@@ -2,7 +2,6 @@
 #include "qdebug.h"
 ClientGlobal::ClientGlobal(QObject *parent) : QObject(parent)
 {
-    qDebug() << "constructor ClientGlobal!" << i++;
 }
 
 MainWindow *ClientGlobal::getMainWindow()
@@ -47,6 +46,18 @@ form_groups *ClientGlobal::createGroups()
 {
     groups = new form_groups();
     return groups;
+}
+
+UserData *ClientGlobal::createUserData()
+{
+    userdata = new UserData();
+    return userdata;
+}
+
+Form_game *ClientGlobal::createFormGame()
+{
+    game = new Form_game();
+    return game;
 }
 
 MainMenu* ClientGlobal::getMainmenu()
@@ -104,6 +115,36 @@ form_groups *ClientGlobal::getGroupsMenu()
     {
         instanse.createGroups();
         return instanse.groups;
+    }
+}
+
+UserData *ClientGlobal::getUserData()
+{
+    ClientGlobal & instanse  = getInstance();
+    if(instanse.userdata != nullptr)
+    {
+        return instanse.userdata;
+    }
+    else
+    {
+        qDebug() << "return" ;
+        instanse.createUserData();
+        return instanse.userdata;
+    }
+}
+
+Form_game *ClientGlobal::getFormGame()
+{
+    ClientGlobal & instanse  = getInstance();
+    if(instanse.game != nullptr)
+    {
+        return instanse.game;
+    }
+    else
+    {
+        qDebug() << "return" ;
+        instanse.createFormGame();
+        return instanse.game;
     }
 }
 

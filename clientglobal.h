@@ -16,6 +16,8 @@ struct group{
 #include "form_group.h"
 #include "network_object.h"
 #include "form_groups.h"
+#include "userdata.h"
+#include "form_game.h"
 
 
 //Данный класс управляет всеми объектами клиента.
@@ -30,36 +32,45 @@ public:
 
     void initialization ();
 
-    MainWindow     * getMainWindow();
-    MainMenu       * getMainmenu();
-    Form_group     * getGroupMenu();
-    network_object * getNetworkObj();
-    form_groups    * getGroupsMenu();
+    MainWindow     * getMainWindow ();
+    MainMenu       * getMainmenu   ();
+    Form_group     * getGroupMenu  ();
+    network_object * getNetworkObj ();
+    form_groups    * getGroupsMenu ();
+    UserData       * getUserData   ();
+    Form_game      * getFormGame   ();
+
 
     void setMainMenu    ();
     void setGroupMenu   ();
     void setGroupsMenu  ();
     void joinGroup      ();
-    void createGroup_    ();
+    void createGroup_   ();
 
 private:
 
-    MainWindow     * createMainWindow();
-    MainMenu       * createMainmenu();
-    Form_group     * createGroup();
-    network_object * createNetworkObj();
-    form_groups    * createGroups();
+    MainWindow     * createMainWindow ();
+    MainMenu       * createMainmenu   ();
+    Form_group     * createGroup      ();
+    network_object * createNetworkObj ();
+    form_groups    * createGroups     ();
+    UserData       * createUserData   ();
+    Form_game      * createFormGame   ();
+
 
     //объекты форм - единственные в своем роде, копий не может и не должно быть!
     MainWindow     * mainwindow  = nullptr;
     MainMenu       * mainmenu    = nullptr;
     Form_group     * group       = nullptr;
     form_groups    * groups      = nullptr;
+    Form_game      * game        = nullptr;
 
 
     //объект работы с сетью
     network_object * network_obj = nullptr;
-    int i = 0;
+
+    //объект пользовательских данных
+    UserData       * userdata    = nullptr;
 
 signals:
 

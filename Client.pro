@@ -16,23 +16,32 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    chess_engine.cpp \
     clientglobal.cpp \
+    form_game.cpp \
     form_group.cpp \
     form_groups.cpp \
     main.cpp \
     mainmenu.cpp \
     mainwindow.cpp \
-    network_object.cpp
+    moveitem.cpp \
+    network_object.cpp \
+    userdata.cpp
 
 HEADERS += \
+    chess_engine.h \
     clientglobal.h \
+    form_game.h \
     form_group.h \
     form_groups.h \
     mainmenu.h \
     mainwindow.h \
-    network_object.h
+    moveitem.h \
+    network_object.h \
+    userdata.h
 
 FORMS += \
+    form_game.ui \
     form_group.ui \
     form_groups.ui \
     mainmenu.ui \

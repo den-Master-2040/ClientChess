@@ -29,7 +29,6 @@ public:
     QString login = "DEN_CHIK_";
     QString token = "1qaz";
     int size_users = -1;
-    QString login_secondUser;
     QString messageToUser;
     QString hod;
 signals:

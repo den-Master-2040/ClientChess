@@ -13,8 +13,49 @@ MoveItem::~MoveItem()
 }
 
 void MoveItem::setPos_(int x, int y)
-{
-    this->setPos(x*SIZECELL, y*SIZECELL);
+{//вражеский ход
+
+    QVector<MoveItem*> chessMap = REF_CLIENT.getFormGame()->chessMap;
+    for(int i = 64; i < chessMap.size(); i++)
+    if((chessMap.at(i)->col ) == x)
+        if((chessMap.at(i)->row ) == y && chessMap.at(i)->beMove)
+        {
+            //чисто удаляем элемент, если вдруг там есть что-то кроме пустой клетки
+            scene->removeItem(scene->itemAt(QPoint(x*SIZECELL,y*SIZECELL), QTransform()));
+            qDebug() << "QVector<MoveItem*> x = " << x << "y = "<< y;
+
+        }
+
+
+    col = x;
+    row = y;
+
+
+    qDebug() << "col: "<< col;
+    qDebug() << "row: "<< row;
+
+    //x*=SIZECELL;
+    //y*=SIZECELL;
+
+
+
+
+    int firstClick = oldcol * 10 + oldrow; //место ОТКУДА ходим
+    int secondClick = row * 10 + col;      //место, КУДА ходим
+
+    qDebug() << "firstClick: "<< firstClick;
+    qDebug() << "secondClick: "<< secondClick;
+    if(m_chess->hod(firstClick,secondClick))
+    {
+
+        this->setPos(x*SIZECELL, y*SIZECELL);
+
+
+        oldcol = row;
+        oldrow = col;
+    }
+
+
 }
 
 QRectF MoveItem::boundingRect() const
@@ -76,6 +117,7 @@ void MoveItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
      * */
     if(beMove)
         setPosToCell();
+    qDebug() << "mouseReleaseEvent id=" << number;
 
     this->setCursor(QCursor(Qt::ArrowCursor));
     Q_UNUSED(event);
@@ -125,12 +167,25 @@ void MoveItem::setPosToCell()
     qDebug() << "secondClick: "<< secondClick;
     if(m_chess->hod(firstClick,secondClick))
     {
+
+        //
+        QVector<MoveItem*> chessMap = REF_CLIENT.getFormGame()->chessMap;
+        for(int i = 64; i < chessMap.size(); i++){
+            qDebug() << "for= " << x << "y = "<< y << "i = "<< i<< "chessMap.at(i)->col*SIZECELL = "<< chessMap.at(i)->col*SIZECELL<< "chessMap.at(i)->row*SIZECELL = "<< chessMap.at(i)->row*SIZECELL;
+            if((chessMap.at(i)->col *SIZECELL) == x)
+                if((chessMap.at(i)->row*SIZECELL ) == y )
+                {
+                    //чисто удаляем элемент, если вдруг там есть что-то кроме пустой клетки
+                    scene->removeItem(scene->itemAt(QPoint(x,y), QTransform()));
+                    qDebug() << "QVector<MoveItem*2> x = " << x << "y = "<< y;
+
+                }
+        }
         this->setPos(pos);
 
         REF_CLIENT.getNetworkObj()->SendToServer("HOD" + QString::number(number)
                                                        + QString::number(col)
                                                        + QString::number(row));
-
         oldcol = row;
         oldrow = col;
     }

@@ -123,7 +123,14 @@ void network_object::RequaredRecvMessage(QString message)
             }
             }
             if(message.at(1) == 'C' && message.at(2) == 'T')
+            {
+                if(REF_CLIENT.getMainWindow()->getCurrentWidget_() == REF_CLIENT.getFormGame())
+                {
+                    REF_CLIENT.setMainMenu();
+                    break;
+                }
                 REF_CLIENT.getGroupMenu()->disconnectAnother();
+            }
             break;
         }
         case 'C':
@@ -162,7 +169,10 @@ void network_object::RequaredRecvMessage(QString message)
         case 'G':
         {
             if(message.at(1) == 'O')
+            {
+                REF_CLIENT.getFormGame()->setPlayerMap();
                 REF_CLIENT.getMainWindow()->setCurrentWidget_(REF_CLIENT.getFormGame());
+            }
             break;
         }
         default:break;

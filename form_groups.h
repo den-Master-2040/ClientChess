@@ -17,6 +17,9 @@ public:
     explicit form_groups(QWidget *parent = nullptr);
     ~form_groups();
     void setDataGroup(QVector<group> &groups);
+private slots:
+    void on_pushButton_4_clicked();
+
 private:
     Ui::form_groups *ui;
 };

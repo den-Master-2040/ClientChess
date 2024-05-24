@@ -16,6 +16,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void setCurrentWidget_(QWidget* w);
+    QWidget* getCurrentWidget_();
 private:
     Ui::MainWindow *ui;
     std::stack<QWidget *> formsStack;

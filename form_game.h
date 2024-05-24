@@ -36,6 +36,8 @@ public:
     void update_chess_array(int arr[8][8]);
     QVector <MoveItem*> chessMap;
 
+    QString nameAnotherPlayer = "";
+
 private slots:
     void on_pushButton_clicked();
 

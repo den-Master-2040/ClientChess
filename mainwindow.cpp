@@ -20,4 +20,11 @@ void MainWindow::setCurrentWidget_(QWidget *w)
     ui->stackedWidget->addWidget(w);//вроде бы копии он не добавляет, значит всё ок
     //qDebug()<< ui->stackedWidget->count();
     ui->stackedWidget->setCurrentWidget(w);
+
+
+}
+
+QWidget *MainWindow::getCurrentWidget_()
+{
+    return ui->stackedWidget->currentWidget();
 }

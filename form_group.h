@@ -14,11 +14,14 @@ class Form_group : public QWidget
 public:
     explicit Form_group(QWidget *parent = nullptr);
     ~Form_group();
+    QString nameAnotherPlayer = "";
+
     void join();
     void createGroup ();
     void connectUser (QString name);
     void messageAnothetUser(QString msg);
     void disconnectAnother();
+    void setCurrentIndex_(int i);
 
 private slots:
     void on_pushButton_2_clicked();

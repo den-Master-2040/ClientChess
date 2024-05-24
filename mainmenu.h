@@ -22,6 +22,8 @@ private slots:
 
     void on_bt_connect_group_clicked();
 
+    void on_bt_exit_clicked();
+
 private:
     Ui::MainMenu *ui;
 

@@ -9,6 +9,7 @@
 #include <QDebug>
 #include <QCursor>
 #include "chess_engine.h"
+#include "QGraphicsScene"
 class MoveItem : public QObject, public QGraphicsItem
 {
     Q_OBJECT
@@ -25,7 +26,7 @@ public:
     int oldcol, oldrow = -1;
 
     chess_Engine *m_chess = nullptr;
-
+    QGraphicsScene *scene;
     void setPos_(int x, int y);
 signals:
 

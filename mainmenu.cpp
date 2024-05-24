@@ -43,3 +43,8 @@ void MainMenu::on_bt_connect_group_clicked()
     REF_CLIENT.getNetworkObj()->SendToServer("GG");
     //REF_CLIENT.setGroupsMenu();
 }
+
+void MainMenu::on_bt_exit_clicked()
+{
+    exit(0);
+}

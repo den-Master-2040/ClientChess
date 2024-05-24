@@ -1,5 +1,6 @@
 #include "form_game.h"
 #include "ui_form_game.h"
+#include "clientglobal.h"
 
 Form_game::Form_game(QWidget *parent) :
     QWidget(parent),
@@ -18,6 +19,7 @@ Form_game::Form_game(QWidget *parent) :
     //scene->setSceneRect(0,0,510,510); // Устанавливаем размер сцены
     QPixmap *map = new QPixmap("C:/Users/DANIL/Documents/build-moveItem-Desktop_Qt_5_14_2_MinGW_64_bit-Debug/debug/1.png");
     setPlayerMap();
+
 }
 
 Form_game::~Form_game()
@@ -27,6 +29,7 @@ Form_game::~Form_game()
 
 void Form_game::setPlayerMap()
 {
+    chessMap.clear();
     int color_counter = 0;
     for(int i = 0; i < 8; i++)
     {
@@ -73,11 +76,14 @@ void Form_game::setPlayerMap()
                 chess->beMove=true;
                 chess->name = QString::number(num_figure);
                 chess->setPos(SIZECELL*i,SIZECELL*j);
+                chess->scene = scene;
                 scene->addItem(chess);   // Добавляем элемент на графическую сцену
+
                 chessMap.push_back(chess);
                 chess->oldcol = j;
                 chess->oldrow = i;
                 chess->number = chessMap.size() - 1;
+
             }
         }
     }
@@ -92,5 +98,8 @@ void Form_game::moveItem_(int numberItem, int x, int y)
 
 void Form_game::on_pushButton_clicked()
 {
-    qDebug() << "exit!";
+    REF_CLIENT.getNetworkObj()->SendToServer("DG");
+    REF_CLIENT.getGroupMenu()->setCurrentIndex_(0);
+    REF_CLIENT.setMainMenu();
+
 }

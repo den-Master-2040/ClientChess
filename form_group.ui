@@ -388,7 +388,8 @@ font: &quot;Arial&quot;;
 border-radius: 2px;</string>
        </property>
        <property name="text">
-        <string>Начать</string>
+        <string>Ожидание
+игроков...</string>
        </property>
       </widget>
       <widget class="QPushButton" name="pushButton_4">

@@ -153,7 +153,7 @@ ClientGlobal &ClientGlobal::getInstance()
     static std::unique_ptr<ClientGlobal> instanse (new ClientGlobal());
     if(instanse != nullptr)
     {
-        qDebug() << "return instance";
+        //qDebug() << "return instance";
         return *instanse;
     }
 }

@@ -92,3 +92,8 @@ void form_groups::setDataGroup(QVector<group> &groups)
 
     }
 }
+
+void form_groups::on_pushButton_4_clicked()
+{
+    REF_CLIENT.setMainMenu();
+}

@@ -17,15 +17,18 @@ void MoveItem::setPos_(int x, int y)
 
     QVector<MoveItem*> chessMap = REF_CLIENT.getFormGame()->chessMap;
     for(int i = 64; i < chessMap.size(); i++)
-    if((chessMap.at(i)->col ) == x)
-        if((chessMap.at(i)->row ) == y && chessMap.at(i)->beMove)
-        {
-            //чисто удаляем элемент, если вдруг там есть что-то кроме пустой клетки
-            scene->removeItem(scene->itemAt(QPoint(x*SIZECELL,y*SIZECELL), QTransform()));
-            qDebug() << "QVector<MoveItem*> x = " << x << "y = "<< y;
+    {
+        qDebug() << "for= " << x << "y = "<< y << "i = "<< i<< "chessMap.at(i)->col = "<< chessMap.at(i)->col<< "chessMap.at(i)->row = "<< chessMap.at(i)->row;
+        if((chessMap.at(i)->col ) == y)
+            if((chessMap.at(i)->row ) == x && chessMap.at(i)->beMove)
+            {
+                //чисто удаляем элемент, если вдруг там есть что-то кроме пустой клетки
+                scene->removeItem(scene->itemAt(QPoint(x*SIZECELL,y*SIZECELL), QTransform()));
+                qDebug() << "QVector<MoveItem*> x = " << x*SIZECELL << "y = "<< y*SIZECELL;
+                break;
 
-        }
-
+            }
+    }
 
     col = x;
     row = y;
@@ -171,13 +174,13 @@ void MoveItem::setPosToCell()
         //
         QVector<MoveItem*> chessMap = REF_CLIENT.getFormGame()->chessMap;
         for(int i = 64; i < chessMap.size(); i++){
-            qDebug() << "for= " << x << "y = "<< y << "i = "<< i<< "chessMap.at(i)->col*SIZECELL = "<< chessMap.at(i)->col*SIZECELL<< "chessMap.at(i)->row*SIZECELL = "<< chessMap.at(i)->row*SIZECELL;
+
             if((chessMap.at(i)->col *SIZECELL) == x)
-                if((chessMap.at(i)->row*SIZECELL ) == y )
+                if((chessMap.at(i)->row*SIZECELL ) == y && chessMap.at(i)->beMove)
                 {
                     //чисто удаляем элемент, если вдруг там есть что-то кроме пустой клетки
                     scene->removeItem(scene->itemAt(QPoint(x,y), QTransform()));
-                    qDebug() << "QVector<MoveItem*2> x = " << x << "y = "<< y;
+                    break;
 
                 }
         }

@@ -82,6 +82,8 @@ void Form_game::setPlayerMap()
                 chessMap.push_back(chess);
                 chess->oldcol = j;
                 chess->oldrow = i;
+                chess->col = j;
+                chess->row = i;
                 chess->number = chessMap.size() - 1;
 
             }

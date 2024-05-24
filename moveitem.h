@@ -19,11 +19,14 @@ public:
 
     bool beMove;//можно ли двигать объект
     QString name = "";
-    int number = 0;
+    int number = -1; //номер в будущем массиве фигур
     int col = -1;
     int row = -1;
     int oldcol, oldrow = -1;
+
     chess_Engine *m_chess = nullptr;
+
+    void setPos_(int x, int y);
 signals:
 
 private:
@@ -34,7 +37,6 @@ private:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void setPosToCell();
     void returnToRange(int &x, int &y);
-//public slots:
 };
 
 #endif // MOVEITEM_H

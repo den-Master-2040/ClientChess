@@ -9,13 +9,13 @@ Form_game::Form_game(QWidget *parent) :
     scene = new QGraphicsScene(this);   // Инициализируем графическую сцену
     scene->setItemIndexMethod(QGraphicsScene::NoIndex); // настраиваем индексацию элементов
 
-    ui->graphicsView->resize(510,510);  // Устанавливаем размер graphicsView
+    //ui->graphicsView->resize(510,510);  // Устанавливаем размер graphicsView
     ui->graphicsView->setScene(scene);  // Устанавливаем графическую сцену в graphicsView
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);    // Настраиваем рендер
     ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground); // Кэш фона
     ui->graphicsView->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
 
-    scene->setSceneRect(0,0,510,510); // Устанавливаем размер сцены
+    //scene->setSceneRect(0,0,510,510); // Устанавливаем размер сцены
     QPixmap *map = new QPixmap("C:/Users/DANIL/Documents/build-moveItem-Desktop_Qt_5_14_2_MinGW_64_bit-Debug/debug/1.png");
     setPlayerMap();
 }
@@ -77,8 +77,20 @@ void Form_game::setPlayerMap()
                 chessMap.push_back(chess);
                 chess->oldcol = j;
                 chess->oldrow = i;
+                chess->number = chessMap.size() - 1;
             }
         }
     }
 
+}
+
+void Form_game::moveItem_(int numberItem, int x, int y)
+{
+    MoveItem * item = chessMap.at(numberItem);
+    item->setPos_(x,y);
+}
+
+void Form_game::on_pushButton_clicked()
+{
+    qDebug() << "exit!";
 }

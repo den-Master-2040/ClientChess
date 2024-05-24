@@ -1,4 +1,5 @@
 #include "moveitem.h"
+#include "clientglobal.h"
 
 MoveItem::MoveItem(chess_Engine *m_chess, QObject *parent) :
     QObject(parent), QGraphicsItem()
@@ -9,6 +10,11 @@ MoveItem::MoveItem(chess_Engine *m_chess, QObject *parent) :
 MoveItem::~MoveItem()
 {
 
+}
+
+void MoveItem::setPos_(int x, int y)
+{
+    this->setPos(x*SIZECELL, y*SIZECELL);
 }
 
 QRectF MoveItem::boundingRect() const
@@ -118,9 +124,13 @@ void MoveItem::setPosToCell()
     qDebug() << "firstClick: "<< firstClick;
     qDebug() << "secondClick: "<< secondClick;
     if(m_chess->hod(firstClick,secondClick))
-
     {
         this->setPos(pos);
+
+        REF_CLIENT.getNetworkObj()->SendToServer("HOD" + QString::number(number)
+                                                       + QString::number(col)
+                                                       + QString::number(row));
+
         oldcol = row;
         oldrow = col;
     }

@@ -148,9 +148,15 @@ void network_object::RequaredRecvMessage(QString message)
         }
         case 'H'://hod
         {
-            message.remove(0,1);
-            hod = message;
-            //emit signalHod();
+            //"HOD2344" // 23 Элемент в массиве сходил на 4 строку 4 позицию
+            message.remove(0,3);
+            int number = message.mid(0,2).toInt();
+
+            int x = message.mid(2,1).toInt();
+            int y = message.mid(3,1).toInt();
+
+            qDebug() << "Number : "<< number << " x: " << x << " y: " << y;
+            REF_CLIENT.getFormGame()->moveItem_(number, x, y);
             break;
         }
         case 'G':

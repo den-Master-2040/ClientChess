@@ -30,10 +30,14 @@ public:
 
     chess_Engine m_chess;                    //логика шахмат
 
+    void moveItem_(int numberItem, int x, int y);
 
     void update_chess_map();
     void update_chess_array(int arr[8][8]);
     QVector <MoveItem*> chessMap;
+
+private slots:
+    void on_pushButton_clicked();
 
 private:
     Ui::Form_game *ui;

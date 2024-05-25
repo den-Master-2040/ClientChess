@@ -6,14 +6,14 @@ network_object::network_object(QObject *parent) : QObject(parent)
     socket = new QTcpSocket(this);
     connect(socket, &QTcpSocket::readyRead, this, &network_object::slotReadyRead);
     //connect(socket, &QTcpSocket::disconnect, socket, &QTcpSocket::deleteLater);
-    socket->connectToHost("89.179.126.139", 2323);
+
     t_connectToHost = new QTimer();
     connect(t_connectToHost, &QTimer::timeout, [this]()
     {
         if(socket->state()!=QTcpSocket::ConnectedState)
         {
             //qDebug() << "unconnected state";
-            socket->connectToHost("127.0.0.1", 2323);
+            socket->connectToHost("89.179.126.139", 2323);
             SendToServer("Login, my login=" + REF_CLIENT.getUserData()->getName() + " my token=" + REF_CLIENT.getUserData()->getPasword() + " ");
             REF_CLIENT.getMainmenu()->setConnections(false);
         }
@@ -167,6 +167,7 @@ void network_object::RequaredRecvMessage(QString message)
 
             qDebug() << "Number : "<< number << " x: " << x << " y: " << y;
             REF_CLIENT.getFormGame()->moveItem_(number, x, y);
+
             break;
         }
         case 'G':
@@ -176,10 +177,17 @@ void network_object::RequaredRecvMessage(QString message)
                 REF_CLIENT.getFormGame()->setPlayerMap();
                 REF_CLIENT.getMainWindow()->setCurrentWidget_(REF_CLIENT.getFormGame());
             }
-            if(message.at(2) == 'W')
+            if(message.at(2) == 'W'){
                 REF_CLIENT.getUserData()->setTeam("white");
+                REF_CLIENT.getFormGame()->setIsMyHod(true);
+                REF_CLIENT.getFormGame()->setNameTeame("Вы играете за белых");
+            }
             if(message.at(2) == 'B')
+            {
                 REF_CLIENT.getUserData()->setTeam("black");
+                REF_CLIENT.getFormGame()->setIsMyHod(false);
+                REF_CLIENT.getFormGame()->setNameTeame("Вы играете за черных");
+            }
             break;
         }
 

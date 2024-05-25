@@ -92,10 +92,46 @@ void Form_game::setPlayerMap()
 
 }
 
+bool Form_game::getIsMyHod() const
+{
+    return isMyHod;
+}
+
+void Form_game::setIsMyHod(bool value)
+{
+    isMyHod = value;
+    if(value)
+    {
+        ui->label->setText("Ваш ход");
+    }
+    else
+    {
+        ui->label->setText("Ожидайте\nход противника");
+    }
+}
+
+void Form_game::setWinLos(QString value)
+{
+    ui->label->setText(value);
+}
+
+void Form_game::appendStoreHods(QString hode)
+{
+    numHod++;
+    ui->textBrowser->append(QString::number(numHod) + " : " + hode);
+}
+
 void Form_game::moveItem_(int numberItem, int x, int y)
 {
+    setIsMyHod(true);
     MoveItem * item = chessMap.at(numberItem);
     item->setPos_(x,y);
+
+}
+
+void Form_game::setNameTeame(QString name)
+{
+    ui->label_2->setText(name);
 }
 
 void Form_game::on_pushButton_clicked()

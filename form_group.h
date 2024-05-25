@@ -16,6 +16,7 @@ public:
     ~Form_group();
     QString nameAnotherPlayer = "";
 
+
     void join();
     void createGroup ();
     void connectUser (QString name);
@@ -36,6 +37,8 @@ private slots:
 
 private:
     Ui::Form_group *ui;
+protected:
+   virtual void keyPressEvent(QKeyEvent *event);
 };
 
 #endif // FORM_GROUP_H

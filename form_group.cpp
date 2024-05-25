@@ -2,6 +2,7 @@
 #include "ui_form_group.h"
 #include "clientglobal.h"
 #include <QTime>
+#include <QKeyEvent>
 Form_group::Form_group(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Form_group)
@@ -88,4 +89,10 @@ void Form_group::on_pushButton_3_clicked()
     ui->stackedWidgetGroup->setCurrentIndex(0);
     REF_CLIENT.getNetworkObj()->SendToServer("GO");//когда сервер пришлём нам тоже GO мы начнём игру
 
+}
+
+void Form_group::keyPressEvent(QKeyEvent *event)
+{
+    qDebug() << event->key();
+    if(event->key() == 16777220) on_pushButton_clicked();
 }

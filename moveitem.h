@@ -24,6 +24,7 @@ public:
     int col = -1;
     int row = -1;
     int oldcol, oldrow = -1;
+    bool endGame = false;
 
     chess_Engine *m_chess = nullptr;
     QGraphicsScene *scene;

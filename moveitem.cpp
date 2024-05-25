@@ -22,20 +22,15 @@ void MoveItem::setPos_(int x, int y)
         if(chessMap.at(i)->col  == x)
             if((chessMap.at(i)->row  == y) && chessMap.at(i)->beMove)
             {
-                checkDeleteItem(i);
-                //чисто удаляем элемент, если вдруг там есть что-то кроме пустой клетки
-                if(chessMap.at(i) != this){
 
+                // удаляем элемент
+                if(chessMap.at(i) != this){
+                    checkDeleteItem(i);
                     scene->removeItem(chessMap.at(i));
                     chessMap.remove(i);
                     break;
                 }
                 qDebug() << "QVector<MoveItem*> x = " << x*SIZECELL << "y = "<< y*SIZECELL;
-
-
-
-                //чисто удаляем элемент, если вдруг там есть что-то кроме пустой клетки
-
 
             }
     }
@@ -97,40 +92,44 @@ void MoveItem::checkDeleteItem(int i)
     };*/
     QVector<MoveItem*> chessMap = REF_CLIENT.getFormGame()->chessMap;
 
+    qDebug() << "checkDeleteItem i = " << i;
     if(chessMap.at(i)->name.toInt() == 12)
     {
+        REF_CLIENT.getFormGame()->setIsMyHod(false);
         if(REF_CLIENT.getUserData()->getTeam() == "black")
         {
             //это поражение, так как 12 - наш король
             qDebug() << "вы проиграли, мьсе";
+            REF_CLIENT.getFormGame()->setWinLos("Вы проиграли");
         }
         else if(REF_CLIENT.getUserData()->getTeam() == "white")
         {
             //это победа потому что 12 - НЕ наш король
             qDebug() << "вы одержали победу, мьсе";
+            REF_CLIENT.getFormGame()->setWinLos("Вы победили!");
+
         }
+        endGame = true;
     }
 
     if(chessMap.at(i)->name.toInt() == 6)
     {
+        REF_CLIENT.getFormGame()->setIsMyHod(false);
         if(REF_CLIENT.getUserData()->getTeam() == "black")
         {
             //это победа потому что 6 - НЕ наш король
             qDebug() << "вы одержали победу, мьсе";
+            REF_CLIENT.getFormGame()->setWinLos("Вы победили!");
         }
         else if(REF_CLIENT.getUserData()->getTeam() == "white")
         {
             //это поражение, так как 6 - наш король
             qDebug() << "вы проиграли, мьсе";
+            REF_CLIENT.getFormGame()->setWinLos("Вы проиграли");
         }
+        endGame = true;
+
     }
-
-
-
-
-                //чисто удаляем элемент, если вдруг там есть что-то кроме пустой клетки
-
-
 }
 
 QRectF MoveItem::boundingRect() const
@@ -150,7 +149,7 @@ void MoveItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     }
     else
     {
-        QPixmap *map = new QPixmap("C:/Users/DANIL/Desktop/build-moveItem-Desktop_Qt_5_14_2_MinGW_32_bit-Debug/debug/chess/" +name+".png");
+        QPixmap *map = new QPixmap(":/" +name+".png");
         *map = map->scaledToWidth(SIZECELL);
         *map = map->scaledToHeight(SIZECELL);
         painter->drawPixmap(0,0,*map);
@@ -165,19 +164,22 @@ void MoveItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 void MoveItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if(!isValidTeam()) return;
+    if(!REF_CLIENT.getFormGame()->isMyHod) return;
     /* Устанавливаем позицию графического элемента
      * в графической сцене, транслировав координаты
      * курсора внутри графического элемента
      * в координатную систему графической сцены
      * */
     //qDebug() << "mouseMoveEvent";
-    //if(beMove)
+    if(beMove)
         this->setPos(mapToScene(event->pos()));
 }
 
 void MoveItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if(!isValidTeam()) return;
+    if(!REF_CLIENT.getFormGame()->isMyHod) return;
+
 
     qDebug() << "mousePressEvent";
     /* При нажатии мышью на графический элемент
@@ -195,7 +197,7 @@ void MoveItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     /* При отпускании мышью элемента
      * заменяем на обычный курсор стрелку
      * */
-    if(beMove)
+    if(beMove && REF_CLIENT.getFormGame()->isMyHod)
         setPosToCell();
     qDebug() << "mouseReleaseEvent id=" << number;
 
@@ -259,8 +261,9 @@ void MoveItem::setPosToCell()
             if(chessMap.at(i)->col *SIZECELL == x)
                 if((chessMap.at(i)->row*SIZECELL  == y) && chessMap.at(i)->beMove)
                 {
-                    checkDeleteItem(i);
+
                     if(chessMap.at(i) != this){
+                        checkDeleteItem(i);
                         scene->removeItem(chessMap.at(i)); //удаляем элемент
                         qDebug() << "delete to "<< chessMap.at(i)->col << " " << chessMap.at(i)->row;
                         chessMap.remove(i);
@@ -272,6 +275,8 @@ void MoveItem::setPosToCell()
                 }
         }
         this->setPos(pos);
+        if(!endGame)
+            REF_CLIENT.getFormGame()->setIsMyHod(false);
 
         REF_CLIENT.getNetworkObj()->SendToServer("HOD" + QString::number(number)
                                                        + QString::number(col)

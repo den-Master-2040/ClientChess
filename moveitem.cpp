@@ -16,13 +16,13 @@ void MoveItem::setPos_(int x, int y)
 {//вражеский ход
 
     QVector<MoveItem*> chessMap = REF_CLIENT.getFormGame()->chessMap;
-    for(int i = 64; i < chessMap.size(); i++)
+    for(int i = 0; i < chessMap.size(); i++)
     {
         qDebug() << "for= " << x << "y = "<< y << "i = "<< i<< "chessMap.at(i)->col = "<< chessMap.at(i)->col<< "chessMap.at(i)->row = "<< chessMap.at(i)->row;
         if(chessMap.at(i)->col  == x)
             if((chessMap.at(i)->row  == y) && chessMap.at(i)->beMove)
             {
-
+                //checkDeleteItem(i);
                 //чисто удаляем элемент, если вдруг там есть что-то кроме пустой клетки
                 scene->removeItem(scene->itemAt(QPoint(x*SIZECELL,y*SIZECELL), QTransform()));
                 qDebug() << "QVector<MoveItem*> x = " << x*SIZECELL << "y = "<< y*SIZECELL;
@@ -72,6 +72,56 @@ bool MoveItem::isValidTeam()
     if(team == "black" && (numFigure > 6 && numFigure < 13))
         return true;
     return false;
+}
+
+void MoveItem::checkDeleteItem(int i)
+{
+    /*int chess_Engine_map[8][8] = {
+        {2, 3, 4, 5, 6, 4, 3, 2},
+        {1, 1, 1, 1, 1, 1, 1, 1},
+        {0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0},
+        {7, 7, 7, 7, 7, 7, 7, 7},
+        {8, 9,10,11,12,10, 9, 8}
+    };*/
+    QVector<MoveItem*> chessMap = REF_CLIENT.getFormGame()->chessMap;
+
+    if(chessMap.at(i)->name.toInt() == 12)
+    {
+        if(REF_CLIENT.getUserData()->getTeam() == "black")
+        {
+            //это поражение, так как 12 - наш король
+            qDebug() << "вы проиграли, мьсе";
+        }
+        else if(REF_CLIENT.getUserData()->getTeam() == "white")
+        {
+            //это победа потому что 12 - НЕ наш король
+            qDebug() << "вы одержали победу, мьсе";
+        }
+    }
+
+    if(chessMap.at(i)->name.toInt() == 6)
+    {
+        if(REF_CLIENT.getUserData()->getTeam() == "black")
+        {
+            //это победа потому что 6 - НЕ наш король
+            qDebug() << "вы одержали победу, мьсе";
+        }
+        else if(REF_CLIENT.getUserData()->getTeam() == "white")
+        {
+            //это поражение, так как 6 - наш король
+            qDebug() << "вы проиграли, мьсе";
+        }
+    }
+
+
+
+
+                //чисто удаляем элемент, если вдруг там есть что-то кроме пустой клетки
+
+
 }
 
 QRectF MoveItem::boundingRect() const
@@ -195,11 +245,12 @@ void MoveItem::setPosToCell()
 
         //мы ходим и проверяем, если мы сходили на "что-то" то мы это удаляем
         QVector<MoveItem*> chessMap = REF_CLIENT.getFormGame()->chessMap;
-        for(int i = 64; i < chessMap.size(); i++){
+        for(int i = 0; i < chessMap.size(); i++){
 
             if(chessMap.at(i)->col *SIZECELL == x)
                 if((chessMap.at(i)->row*SIZECELL  == y) && chessMap.at(i)->beMove)
                 {
+
                     //чисто удаляем элемент, если вдруг там есть что-то кроме пустой клетки
                     scene->removeItem(scene->itemAt(QPoint(x,y), QTransform()));
                     break;

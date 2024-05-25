@@ -30,6 +30,7 @@ public:
     void setPos_(int x, int y);
 
     bool isValidTeam();
+    void checkDeleteItem(int i); //проверяет удаляемый элемент и выполняет действия в зависимости от этого
 signals:
 
 private:

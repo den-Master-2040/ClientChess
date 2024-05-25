@@ -5,22 +5,18 @@ network_object::network_object(QObject *parent) : QObject(parent)
 {
     socket = new QTcpSocket(this);
     connect(socket, &QTcpSocket::readyRead, this, &network_object::slotReadyRead);
-    //connect(socket, &QTcpSocket::disconnect, socket, &QTcpSocket::deleteLater);
-
     t_connectToHost = new QTimer();
     connect(t_connectToHost, &QTimer::timeout, [this]()
     {
         if(socket->state()!=QTcpSocket::ConnectedState)
         {
-            //qDebug() << "unconnected state";
-            socket->connectToHost("89.179.126.139", 2323);
+            socket->connectToHost("127.0.0.1", 2323);
             SendToServer("Login, my login=" + REF_CLIENT.getUserData()->getName() + " my token=" + REF_CLIENT.getUserData()->getPasword() + " ");
             REF_CLIENT.getMainmenu()->setConnections(false);
         }
         else
         {
             REF_CLIENT.getMainmenu()->setConnections(true);
-            //t_connectToHost->stop();
         }
     });
     t_connectToHost->start(100);
@@ -33,10 +29,8 @@ void network_object::SendToServer(QString str)
     out.setVersion(QDataStream::Qt_5_9);
     out << str;
 
-    //qDebug() << socket->state();
-    //qDebug() << "SendMsg : " << Data;
-    socket->write(Data);
-    //qDebug() << socket->state();
+    //if(socket->state() == QTcpSocket::ConnectedState)
+        socket->write(Data);
 }
 
 void network_object::RequaredRecvMessage(QString message)
@@ -71,6 +65,8 @@ void network_object::RequaredRecvMessage(QString message)
         case 'D':
         {
             if(message.size() > 2){
+                REF_CLIENT.getMainmenu()->setNullGroup(false);
+
             if(message.at(1) == 'g')
             {
                 QVector<group> groups;
@@ -128,11 +124,14 @@ void network_object::RequaredRecvMessage(QString message)
                 {
                     REF_CLIENT.getFormGame()->chessMap.clear();
                     REF_CLIENT.getFormGame()->scene->clear();
-
+                    REF_CLIENT.getFormGame()->clearMap();
                     REF_CLIENT.setMainMenu();
                     break;
                 }
                 REF_CLIENT.getGroupMenu()->disconnectAnother();
+            }
+            else{
+                REF_CLIENT.getMainmenu()->setNullGroup(true);
             }
             break;
         }

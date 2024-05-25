@@ -44,6 +44,7 @@ public:
     void setIsMyHod(bool value);
     void setWinLos(QString value);
     void appendStoreHods(QString hode);
+    void clearMap();
 private slots:
     void on_pushButton_clicked();
 

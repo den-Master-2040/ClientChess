@@ -16,7 +16,7 @@ class MoveItem : public QObject, public QGraphicsItem
 public:
     explicit MoveItem(chess_Engine *m_chess, QObject *parent = 0 );
     ~MoveItem();
-    Qt::GlobalColor color;
+    QColor color;
 
     bool beMove = false;//можно ли двигать объект
     QString name = "";
@@ -30,6 +30,7 @@ public:
     QGraphicsScene *scene;
     void setPos_(int x, int y);
 
+    bool validDeleteItem(int number);
     bool isValidTeam();
     void checkDeleteItem(int i); //проверяет удаляемый элемент и выполняет действия в зависимости от этого
 signals:

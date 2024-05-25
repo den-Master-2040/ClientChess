@@ -16,9 +16,7 @@ Form_game::Form_game(QWidget *parent) :
     ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground); // Кэш фона
     ui->graphicsView->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
 
-    //scene->setSceneRect(0,0,510,510); // Устанавливаем размер сцены
-    QPixmap *map = new QPixmap("C:/Users/DANIL/Documents/build-moveItem-Desktop_Qt_5_14_2_MinGW_64_bit-Debug/debug/1.png");
-
+    scene->setSceneRect(0,0,480,480); // Устанавливаем размер сцены
 }
 
 Form_game::~Form_game()
@@ -42,7 +40,7 @@ void Form_game::setPlayerMap()
             if(color_counter % 2)
                 item->color = Qt::lightGray;
             else
-                item->color = Qt::green;
+                item->color = QColor(0x79,0x5c,0x32);
 
             scene->addItem(item);   // Добавляем элемент на графическую сцену
             chessMap.push_back(item);
@@ -121,6 +119,14 @@ void Form_game::appendStoreHods(QString hode)
     ui->textBrowser->append(QString::number(numHod) + " : " + hode);
 }
 
+void Form_game::clearMap()
+{
+    scene->clear();
+    chessMap.clear();
+    numHod = 0;
+
+}
+
 void Form_game::moveItem_(int numberItem, int x, int y)
 {
     setIsMyHod(true);
@@ -138,9 +144,7 @@ void Form_game::on_pushButton_clicked()
 {
     REF_CLIENT.getNetworkObj()->SendToServer("DG");
     REF_CLIENT.getGroupMenu()->setCurrentIndex_(0);
-    scene->clear();
-    chessMap.clear();
-
+    clearMap();
     REF_CLIENT.setMainMenu();
 
 }

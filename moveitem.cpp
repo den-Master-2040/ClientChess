@@ -12,12 +12,21 @@ MoveItem::~MoveItem()
 
 }
 
+QString convert(int oldcol, int oldrow, int col, int row)
+{
+    QString result = "";
+
+    result = char(oldcol + 48 + '0') + QString::number(oldrow) + char(col + 48 + '0') + QString::number(row);
+    return result;
+}
+
 void MoveItem::setPos_(int x, int y)
 {//вражеский ход
 
     QVector<MoveItem*> chessMap = REF_CLIENT.getFormGame()->chessMap;
     for(int i = 50; i < chessMap.size(); i++)
     {
+        qDebug()<< "setPos";
         qDebug() << "for= " << x << "y = "<< y << "i = "<< i<< "chessMap.at(i)->col = "<< chessMap.at(i)->col<< "chessMap.at(i)->row = "<< chessMap.at(i)->row;
         if(chessMap.at(i)->col  == x)
             if((chessMap.at(i)->row  == y) && chessMap.at(i)->beMove)
@@ -28,10 +37,9 @@ void MoveItem::setPos_(int x, int y)
                     checkDeleteItem(i);
                     scene->removeItem(chessMap.at(i));
                     chessMap.remove(i);
+                    qDebug() << "QVector<MoveItem*> x = " << x*SIZECELL << "y = "<< y*SIZECELL;
                     break;
                 }
-                qDebug() << "QVector<MoveItem*> x = " << x*SIZECELL << "y = "<< y*SIZECELL;
-
             }
     }
 
@@ -55,15 +63,26 @@ void MoveItem::setPos_(int x, int y)
     qDebug() << "secondClick: "<< secondClick;
     if(m_chess->hod(firstClick,secondClick))
     {
-
+        REF_CLIENT.getFormGame()->appendStoreHods(convert(oldrow, oldcol, col, row));
         this->setPos(x*SIZECELL, y*SIZECELL);
-
-
         oldcol = row;
         oldrow = col;
     }
+}
 
-
+bool MoveItem::validDeleteItem(int number)
+{
+    QString team = REF_CLIENT.getUserData()->getTeam();
+    if(team == "white")
+    {
+        if(number > 0 && number < 7) return true;
+        else return false;
+    }
+    else if(team == "black")
+    {
+        if(number > 6 && number < 13) return true;
+        else return false;
+    }
 }
 
 bool MoveItem::isValidTeam()
@@ -262,18 +281,16 @@ void MoveItem::setPosToCell()
                 if((chessMap.at(i)->row*SIZECELL  == y) && chessMap.at(i)->beMove)
                 {
 
-                    if(chessMap.at(i) != this){
+                    if(chessMap.at(i) != this && !validDeleteItem(chessMap.at(i)->name.toInt()) ){//isValid team -
                         checkDeleteItem(i);
                         scene->removeItem(chessMap.at(i)); //удаляем элемент
                         qDebug() << "delete to "<< chessMap.at(i)->col << " " << chessMap.at(i)->row;
                         chessMap.remove(i);
                         break;
                     }
-
-
-
                 }
         }
+        REF_CLIENT.getFormGame()->appendStoreHods(convert(oldrow, oldcol, col, row));
         this->setPos(pos);
         if(!endGame)
             REF_CLIENT.getFormGame()->setIsMyHod(false);

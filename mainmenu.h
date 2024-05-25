@@ -16,7 +16,7 @@ public:
     ~MainMenu();
     void setCountUsers(int count);
     void setConnections(bool state);
-
+    void setNullGroup(bool state);
 private slots:
     void on_bt_create_group_clicked();
 

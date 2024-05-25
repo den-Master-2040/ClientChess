@@ -6,7 +6,7 @@ MainMenu::MainMenu(QWidget *parent) :
     ui(new Ui::MainMenu)
 {
     ui->setupUi(this);
-
+    ui->label_5->setVisible(false);
 }
 
 MainMenu::~MainMenu()
@@ -32,6 +32,10 @@ void MainMenu::setConnections(bool state)
     }
 }
 
+void MainMenu::setNullGroup(bool state)
+{
+     ui->label_5->setVisible(state);
+}
 
 void MainMenu::on_bt_create_group_clicked()
 {

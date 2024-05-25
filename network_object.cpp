@@ -126,6 +126,9 @@ void network_object::RequaredRecvMessage(QString message)
             {
                 if(REF_CLIENT.getMainWindow()->getCurrentWidget_() == REF_CLIENT.getFormGame())
                 {
+                    REF_CLIENT.getFormGame()->chessMap.clear();
+                    REF_CLIENT.getFormGame()->scene->clear();
+
                     REF_CLIENT.setMainMenu();
                     break;
                 }

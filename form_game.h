@@ -35,7 +35,7 @@ public:
     void update_chess_map();
     void update_chess_array(int arr[8][8]);
     QVector <MoveItem*> chessMap;
-
+    QGraphicsScene *scene;
     QString nameAnotherPlayer = "";
 
 private slots:
@@ -43,7 +43,7 @@ private slots:
 
 private:
     Ui::Form_game *ui;
-    QGraphicsScene *scene;
+
 };
 
 #endif // FORM_GAME_H

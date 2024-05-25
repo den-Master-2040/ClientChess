@@ -18,7 +18,6 @@ Form_game::Form_game(QWidget *parent) :
 
     //scene->setSceneRect(0,0,510,510); // Устанавливаем размер сцены
     QPixmap *map = new QPixmap("C:/Users/DANIL/Documents/build-moveItem-Desktop_Qt_5_14_2_MinGW_64_bit-Debug/debug/1.png");
-    setPlayerMap();
 
 }
 
@@ -89,6 +88,7 @@ void Form_game::setPlayerMap()
             }
         }
     }
+    qDebug() << "sizeChessMap" << chessMap.size();
 
 }
 
@@ -102,6 +102,9 @@ void Form_game::on_pushButton_clicked()
 {
     REF_CLIENT.getNetworkObj()->SendToServer("DG");
     REF_CLIENT.getGroupMenu()->setCurrentIndex_(0);
+    scene->clear();
+    chessMap.clear();
+
     REF_CLIENT.setMainMenu();
 
 }

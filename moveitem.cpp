@@ -16,17 +16,26 @@ void MoveItem::setPos_(int x, int y)
 {//вражеский ход
 
     QVector<MoveItem*> chessMap = REF_CLIENT.getFormGame()->chessMap;
-    for(int i = 0; i < chessMap.size(); i++)
+    for(int i = 50; i < chessMap.size(); i++)
     {
         qDebug() << "for= " << x << "y = "<< y << "i = "<< i<< "chessMap.at(i)->col = "<< chessMap.at(i)->col<< "chessMap.at(i)->row = "<< chessMap.at(i)->row;
         if(chessMap.at(i)->col  == x)
             if((chessMap.at(i)->row  == y) && chessMap.at(i)->beMove)
             {
-                //checkDeleteItem(i);
+                checkDeleteItem(i);
                 //чисто удаляем элемент, если вдруг там есть что-то кроме пустой клетки
-                scene->removeItem(scene->itemAt(QPoint(x*SIZECELL,y*SIZECELL), QTransform()));
+                if(chessMap.at(i) != this){
+
+                    scene->removeItem(chessMap.at(i));
+                    chessMap.remove(i);
+                    break;
+                }
                 qDebug() << "QVector<MoveItem*> x = " << x*SIZECELL << "y = "<< y*SIZECELL;
-                break;
+
+
+
+                //чисто удаляем элемент, если вдруг там есть что-то кроме пустой клетки
+
 
             }
     }
@@ -162,7 +171,7 @@ void MoveItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
      * в координатную систему графической сцены
      * */
     //qDebug() << "mouseMoveEvent";
-    if(beMove)
+    //if(beMove)
         this->setPos(mapToScene(event->pos()));
 }
 
@@ -246,14 +255,19 @@ void MoveItem::setPosToCell()
         //мы ходим и проверяем, если мы сходили на "что-то" то мы это удаляем
         QVector<MoveItem*> chessMap = REF_CLIENT.getFormGame()->chessMap;
         for(int i = 0; i < chessMap.size(); i++){
-
+        qDebug() << "for= " << x << "y = "<< y << "i = "<< i<< "chessMap.at(i)->col = "<< chessMap.at(i)->col<< "chessMap.at(i)->row = "<< chessMap.at(i)->row;
             if(chessMap.at(i)->col *SIZECELL == x)
                 if((chessMap.at(i)->row*SIZECELL  == y) && chessMap.at(i)->beMove)
                 {
+                    checkDeleteItem(i);
+                    if(chessMap.at(i) != this){
+                        scene->removeItem(chessMap.at(i)); //удаляем элемент
+                        qDebug() << "delete to "<< chessMap.at(i)->col << " " << chessMap.at(i)->row;
+                        chessMap.remove(i);
+                        break;
+                    }
 
-                    //чисто удаляем элемент, если вдруг там есть что-то кроме пустой клетки
-                    scene->removeItem(scene->itemAt(QPoint(x,y), QTransform()));
-                    break;
+
 
                 }
         }

@@ -18,7 +18,7 @@ public:
     ~MoveItem();
     Qt::GlobalColor color;
 
-    bool beMove;//можно ли двигать объект
+    bool beMove = false;//можно ли двигать объект
     QString name = "";
     int number = -1; //номер в будущем массиве фигур
     int col = -1;

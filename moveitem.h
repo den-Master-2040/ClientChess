@@ -1,4 +1,4 @@
-#ifndef MOVEITEM_H
+﻿#ifndef MOVEITEM_H
 #define MOVEITEM_H
 #define SIZECELL 60
 
@@ -28,6 +28,8 @@ public:
     chess_Engine *m_chess = nullptr;
     QGraphicsScene *scene;
     void setPos_(int x, int y);
+
+    bool isValidTeam();
 signals:
 
 private:

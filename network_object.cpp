@@ -173,8 +173,13 @@ void network_object::RequaredRecvMessage(QString message)
                 REF_CLIENT.getFormGame()->setPlayerMap();
                 REF_CLIENT.getMainWindow()->setCurrentWidget_(REF_CLIENT.getFormGame());
             }
+            if(message.at(2) == 'W')
+                REF_CLIENT.getUserData()->setTeam("white");
+            if(message.at(2) == 'B')
+                REF_CLIENT.getUserData()->setTeam("black");
             break;
         }
+
         default:break;
     }
 }

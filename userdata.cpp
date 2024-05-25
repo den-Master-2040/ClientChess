@@ -24,3 +24,13 @@ void UserData::setPasword(const QString &value)
 {
     pasword = value;
 }
+
+QString UserData::getTeam() const
+{
+    return team;
+}
+
+void UserData::setTeam(const QString &value)
+{
+    team = value;
+}

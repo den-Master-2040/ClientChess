@@ -15,9 +15,13 @@ public:
     QString getPasword() const;
     void setPasword(const QString &value);
 
+    QString getTeam() const;
+    void setTeam(const QString &value);
+
 private:
     QString name = "NEWCLIENTDEN";
     QString pasword = "";
+    QString team = "";
 
 };
 

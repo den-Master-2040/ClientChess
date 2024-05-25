@@ -1,4 +1,4 @@
-#include "moveitem.h"
+﻿#include "moveitem.h"
 #include "clientglobal.h"
 
 MoveItem::MoveItem(chess_Engine *m_chess, QObject *parent) :
@@ -19,9 +19,10 @@ void MoveItem::setPos_(int x, int y)
     for(int i = 64; i < chessMap.size(); i++)
     {
         qDebug() << "for= " << x << "y = "<< y << "i = "<< i<< "chessMap.at(i)->col = "<< chessMap.at(i)->col<< "chessMap.at(i)->row = "<< chessMap.at(i)->row;
-        if((chessMap.at(i)->col ) == y)
-            if((chessMap.at(i)->row ) == x && chessMap.at(i)->beMove)
+        if(chessMap.at(i)->col  == x)
+            if((chessMap.at(i)->row  == y) && chessMap.at(i)->beMove)
             {
+
                 //чисто удаляем элемент, если вдруг там есть что-то кроме пустой клетки
                 scene->removeItem(scene->itemAt(QPoint(x*SIZECELL,y*SIZECELL), QTransform()));
                 qDebug() << "QVector<MoveItem*> x = " << x*SIZECELL << "y = "<< y*SIZECELL;
@@ -61,6 +62,18 @@ void MoveItem::setPos_(int x, int y)
 
 }
 
+bool MoveItem::isValidTeam()
+{
+    QString team = REF_CLIENT.getUserData()->getTeam();
+    int numFigure = name.toInt();
+
+    if(team == "white" && (numFigure > 0 && numFigure < 7))
+        return true;
+    if(team == "black" && (numFigure > 6 && numFigure < 13))
+        return true;
+    return false;
+}
+
 QRectF MoveItem::boundingRect() const
 {
     return QRectF (0,0,SIZECELL,SIZECELL);
@@ -68,7 +81,8 @@ QRectF MoveItem::boundingRect() const
 
 void MoveItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    //qDebug() << "paint";
+    //if(!isValidTeam()) return;
+
     if(name == "")
     {
         painter->setPen(color);
@@ -91,6 +105,7 @@ void MoveItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
 void MoveItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
+    if(!isValidTeam()) return;
     /* Устанавливаем позицию графического элемента
      * в графической сцене, транслировав координаты
      * курсора внутри графического элемента
@@ -103,6 +118,8 @@ void MoveItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void MoveItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    if(!isValidTeam()) return;
+
     qDebug() << "mousePressEvent";
     /* При нажатии мышью на графический элемент
      * заменяем курсор на руку, которая держит этот элемента
@@ -114,6 +131,7 @@ void MoveItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void MoveItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    if(!isValidTeam()) return;
     qDebug() << "mouseReleaseEvent";
     /* При отпускании мышью элемента
      * заменяем на обычный курсор стрелку
@@ -168,15 +186,19 @@ void MoveItem::setPosToCell()
 
     qDebug() << "firstClick: "<< firstClick;
     qDebug() << "secondClick: "<< secondClick;
+
+
+
+
     if(m_chess->hod(firstClick,secondClick))
     {
 
-        //
+        //мы ходим и проверяем, если мы сходили на "что-то" то мы это удаляем
         QVector<MoveItem*> chessMap = REF_CLIENT.getFormGame()->chessMap;
         for(int i = 64; i < chessMap.size(); i++){
 
-            if((chessMap.at(i)->col *SIZECELL) == x)
-                if((chessMap.at(i)->row*SIZECELL ) == y && chessMap.at(i)->beMove)
+            if(chessMap.at(i)->col *SIZECELL == x)
+                if((chessMap.at(i)->row*SIZECELL  == y) && chessMap.at(i)->beMove)
                 {
                     //чисто удаляем элемент, если вдруг там есть что-то кроме пустой клетки
                     scene->removeItem(scene->itemAt(QPoint(x,y), QTransform()));

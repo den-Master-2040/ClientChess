@@ -10,7 +10,7 @@ network_object::network_object(QObject *parent) : QObject(parent)
     {
         if(socket->state()!=QTcpSocket::ConnectedState)
         {
-            socket->connectToHost("192.168.1.65", 2323);
+            socket->connectToHost("127.0.0.1", 2323);
             SendToServer("Login, my login=" + REF_CLIENT.getUserData()->getName() + " my token=" + REF_CLIENT.getUserData()->getPasword() + " ");
             REF_CLIENT.getMainmenu()->setConnections(false);
         }
@@ -136,6 +136,11 @@ void network_object::RequaredRecvMessage(QString message)
             else{
                 REF_CLIENT.getMainmenu()->setNullGroup(true);
             }
+            if(message.at(1) == 'M' && message.at(2) == 'M')
+            {
+                message.remove(0,3);
+                REF_CLIENT.getGroupMenu()->setNameGroup(message);
+            }
             break;
         }
         case 'C':
@@ -143,12 +148,20 @@ void network_object::RequaredRecvMessage(QString message)
             if(message.at(1) == 'U')
             {
                 QString lsu;
-                for(int i = 3; i < message.size(); i++)
-                    lsu += message.at(i);
-
+                int i = 3;
+                for(; i < message.size(); i++)
+                    if(message.at(i) != ' ')
+                        lsu += message.at(i);
+                    else break;
 
                 qDebug() << "login_secondUser: " << lsu;
                 REF_CLIENT.getGroupMenu()->connectUser(lsu);
+                QString namegroup;
+                for(i++; i < message.size(); i++)
+                {
+                    namegroup+=message.at(i);
+                }
+                REF_CLIENT.getGroupMenu()->setNameGroup(namegroup);
             }
             break;
         }
@@ -192,6 +205,7 @@ void network_object::RequaredRecvMessage(QString message)
             }
             break;
         }
+
 
         default:break;
     }

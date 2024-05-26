@@ -33,7 +33,9 @@ void Form_group::createGroup()
 
 void Form_group::connectUser(QString name)
 {
+    ui->label_3->setText(REF_CLIENT.getUserData()->getName());
     ui->label_5->setVisible(true);
+    ui->label_6->setVisible(false);
     ui->label_5->setText(name);
     nameAnotherPlayer = name;
     ui->pushButton_3->setText("Начать");
@@ -56,6 +58,11 @@ void Form_group::disconnectAnother()
 void Form_group::setCurrentIndex_(int i)
 {
     ui->stackedWidgetGroup->setCurrentIndex(i);
+}
+
+void Form_group::setNameGroup(QString name)
+{
+    ui->label_2->setText(name);
 }
 
 void Form_group::on_pushButton_2_clicked()

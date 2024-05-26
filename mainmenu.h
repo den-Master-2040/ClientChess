@@ -24,6 +24,10 @@ private slots:
 
     void on_bt_exit_clicked();
 
+    void on_bt_profile_clicked();
+
+    void on_bt_mm_clicked();
+
 private:
     Ui::MainMenu *ui;
 

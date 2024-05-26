@@ -23,7 +23,7 @@ public:
     void messageAnothetUser(QString msg);
     void disconnectAnother();
     void setCurrentIndex_(int i);
-
+    void setNameGroup(QString name);
 private slots:
     void on_pushButton_2_clicked();
 

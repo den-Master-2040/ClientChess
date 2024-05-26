@@ -26,6 +26,7 @@ void form_groups::setDataGroup(QVector<group> &groups)
 
 
     ui->scrollAreaWidgetContents_2->repaint();
+
     for(int i = 0; i < groups.size(); i++)
     {
         //ui->label_5->setVisible(false);
@@ -36,6 +37,7 @@ void form_groups::setDataGroup(QVector<group> &groups)
         name_group->setMinimumSize(QSize(200,21));
 
         ui->gridLayout_3->addWidget(name_group, i+1, 0, 1, 1);
+        labels.push_back(name_group);
 
         QLabel *size_player;
         size_player = new QLabel(ui->scrollAreaWidgetContents_2);
@@ -44,6 +46,7 @@ void form_groups::setDataGroup(QVector<group> &groups)
         size_player->setMinimumSize(QSize(100,21));
 
         ui->gridLayout_3->addWidget(size_player, i+1, 1, 1, 1);
+        labels.push_back(size_player);
 
         QLabel *id;
         id = new QLabel(ui->scrollAreaWidgetContents_2);
@@ -52,6 +55,7 @@ void form_groups::setDataGroup(QVector<group> &groups)
         id->setMinimumSize(QSize(100,21));
 
         ui->gridLayout_3->addWidget(id, i+1, 2, 1, 1);
+        labels.push_back(id);
 
         QPushButton *pb;
         pb = new QPushButton(ui->scrollAreaWidgetContents_2);
@@ -65,35 +69,33 @@ void form_groups::setDataGroup(QVector<group> &groups)
                           "1 rgba(87, 87, 87, 255));\ncolor:white;;\nborder-radius: 2px;\n};\n");
 
         ui->gridLayout_3->addWidget(pb, i+1, 3, 1, 1);
+        pushButtons.push_back(pb);
 
         connect(pb, &QPushButton::clicked,[this,i,name_group,size_player,id,pb, groups](){
-            //fcg->nameSecondUser = network_obj->groups.at(i).name_first_user;//пихаем логин первого юзера из сети
-            //fcg->nameFirstUser = network_obj->login;//пихаем свой логин
-            //fcg->nextPage();
-            //on_bt_create_group_clicked();
+
             REF_CLIENT.setGroupMenu();
             REF_CLIENT.joinGroup();
             REF_CLIENT.getNetworkObj()->SendToServer("OKC " + QString::number(groups.at(i).id)); //get gpoup
-
-            //delete name_group;
-            //delete size_player;
-            //delete id;
-            //delete pb;
-            qDebug() << "Delete!";
         });
 
-        connect(ui->pushButton_4, &QPushButton::clicked, [name_group,size_player,id,pb](){
-            //delete name_group;
-            //delete size_player;
-            //delete id;
-            //delete pb;
-            qDebug() << "Delete!";
-        });
 
     }
 }
 
 void form_groups::on_pushButton_4_clicked()
 {
+    for (int i = 0; i < labels.size(); i++) {
+       ui->gridLayout_3->removeWidget(labels.at(i));
+    }
+
+    for (int i = 0; i < pushButtons.size(); i++) {
+       ui->gridLayout_3->removeWidget(pushButtons.at(i));
+    }
+
+    labels.clear();
+    pushButtons.clear();
+
+    ui->scrollAreaWidgetContents_2->repaint();
+
     REF_CLIENT.setMainMenu();
 }

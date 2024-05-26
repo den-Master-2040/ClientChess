@@ -37,18 +37,30 @@ void MainMenu::setNullGroup(bool state)
      ui->label_5->setVisible(state);
 }
 
-void MainMenu::on_bt_create_group_clicked()
+void MainMenu::on_bt_create_group_clicked()//кнопка создать группу
 {
     REF_CLIENT.setGroupMenu();
 }
 
-void MainMenu::on_bt_connect_group_clicked()
+void MainMenu::on_bt_connect_group_clicked()//кнопка подключиться
 {
     REF_CLIENT.getNetworkObj()->SendToServer("GG");
     //REF_CLIENT.setGroupsMenu();
 }
 
-void MainMenu::on_bt_exit_clicked()
+void MainMenu::on_bt_exit_clicked()//кнопка выход
 {
     exit(0);
+}
+
+void MainMenu::on_bt_profile_clicked()//кнопка профиль
+{
+    REF_CLIENT.getMainWindow()->setCurrentWidget_(REF_CLIENT.getFormUser());
+}
+
+void MainMenu::on_bt_mm_clicked() //кнопка быстрая игра
+{
+    REF_CLIENT.getNetworkObj()->SendToServer("FG");//fast game
+    REF_CLIENT.setGroupMenu();
+    REF_CLIENT.getGroupMenu()->setCurrentIndex_(1);
 }

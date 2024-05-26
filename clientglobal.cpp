@@ -60,6 +60,12 @@ Form_game *ClientGlobal::createFormGame()
     return game;
 }
 
+Form_user *ClientGlobal::createFormUser()
+{
+    form_user = new Form_user();
+    return form_user;
+}
+
 MainMenu* ClientGlobal::getMainmenu()
 {
     ClientGlobal & instanse  = getInstance();
@@ -145,6 +151,21 @@ Form_game *ClientGlobal::getFormGame()
         qDebug() << "return" ;
         instanse.createFormGame();
         return instanse.game;
+    }
+}
+
+Form_user *ClientGlobal::getFormUser()
+{
+    ClientGlobal & instanse  = getInstance();
+    if(instanse.form_user != nullptr)
+    {
+        return instanse.form_user;
+    }
+    else
+    {
+        qDebug() << "return";
+        instanse.createFormUser();
+        return instanse.form_user;
     }
 }
 

@@ -2,6 +2,8 @@
 #define FORM_GROUPS_H
 
 #include <QWidget>
+#include <QLabel>
+#include <QPushButton>
 
 struct group;
 
@@ -17,6 +19,10 @@ public:
     explicit form_groups(QWidget *parent = nullptr);
     ~form_groups();
     void setDataGroup(QVector<group> &groups);
+
+    QVector<QWidget*> widgetGroups;
+    QVector<QLabel*> labels;
+    QVector<QPushButton*> pushButtons;
 private slots:
     void on_pushButton_4_clicked();
 

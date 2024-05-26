@@ -72,6 +72,12 @@ Form_pass *ClientGlobal::createFormPass()
     return pass;
 }
 
+Form_settings *ClientGlobal::createFormSett()
+{
+    settings = new Form_settings();
+    return settings;
+}
+
 MainMenu* ClientGlobal::getMainmenu()
 {
     ClientGlobal & instanse  = getInstance();
@@ -187,6 +193,21 @@ Form_pass *ClientGlobal::getFormPass()
         qDebug() << "return";
         instanse.createFormPass();
         return instanse.pass;
+    }
+}
+
+Form_settings *ClientGlobal::getFormSett()
+{
+    ClientGlobal & instanse  = getInstance();
+    if(instanse.settings != nullptr)
+    {
+        return instanse.settings;
+    }
+    else
+    {
+        qDebug() << "return";
+        instanse.createFormSett();
+        return instanse.settings;
     }
 }
 

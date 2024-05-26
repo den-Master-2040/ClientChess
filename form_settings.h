@@ -15,6 +15,13 @@ public:
     explicit Form_settings(QWidget *parent = nullptr);
     ~Form_settings();
 
+private slots:
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_3_clicked();
+
 private:
     Ui::Form_settings *ui;
 };

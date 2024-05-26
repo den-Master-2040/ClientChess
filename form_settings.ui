@@ -1,21 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>Form_settings</class>
- <widget name="Form_settings" class="QWidget">
+ <widget class="QWidget" name="Form_settings">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>790</width>
+    <height>690</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>220</y>
+     <width>161</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+
+background-color:qlineargradient(spread:pad, x1:0.494, y1:0.846136, x2:0.494382, y2:1, stop:0 rgba(69, 69, 69, 255), stop:1 rgba(149, 149, 149, 255));
+color:white;
+font: &quot;Arial&quot;;
+border-radius: 2px;
+}
+QPushButton::pressed{
+
+background-color:qlineargradient(spread:pad, x1:0.426, y1:0.800682, x2:0.427, y2:1, stop:0 rgba(37, 37, 37, 255), stop:1 rgba(87, 87, 87, 255));
+color:white;
+font: &quot;Arial&quot;;
+border-radius: 2px;
+};
+</string>
+   </property>
+   <property name="text">
+    <string>Установить цвет
+белой клетки</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>310</y>
+     <width>161</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+
+background-color:qlineargradient(spread:pad, x1:0.494, y1:0.846136, x2:0.494382, y2:1, stop:0 rgba(69, 69, 69, 255), stop:1 rgba(149, 149, 149, 255));
+color:white;
+font: &quot;Arial&quot;;
+border-radius: 2px;
+}
+QPushButton::pressed{
+
+background-color:qlineargradient(spread:pad, x1:0.426, y1:0.800682, x2:0.427, y2:1, stop:0 rgba(37, 37, 37, 255), stop:1 rgba(87, 87, 87, 255));
+color:white;
+font: &quot;Arial&quot;;
+border-radius: 2px;
+};
+</string>
+   </property>
+   <property name="text">
+    <string>Установить цвет
+черной клетки</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_3">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>590</y>
+     <width>131</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+
+background-color:qlineargradient(spread:pad, x1:0.494, y1:0.846136, x2:0.494382, y2:1, stop:0 rgba(69, 69, 69, 255), stop:1 rgba(149, 149, 149, 255));
+color:white;
+font: &quot;Arial&quot;;
+border-radius: 2px;
+}
+QPushButton::pressed{
+
+background-color:qlineargradient(spread:pad, x1:0.426, y1:0.800682, x2:0.427, y2:1, stop:0 rgba(37, 37, 37, 255), stop:1 rgba(87, 87, 87, 255));
+color:white;
+font: &quot;Arial&quot;;
+border-radius: 2px;
+};
+</string>
+   </property>
+   <property name="text">
+    <string>Назад</string>
+   </property>
+  </widget>
  </widget>
- <pixmapfunction/>
+ <resources/>
  <connections/>
 </ui>

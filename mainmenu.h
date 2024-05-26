@@ -28,6 +28,8 @@ private slots:
 
     void on_bt_mm_clicked();
 
+    void on_bt_settings_clicked();
+
 private:
     Ui::MainMenu *ui;
 

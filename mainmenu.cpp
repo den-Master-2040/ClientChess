@@ -64,3 +64,8 @@ void MainMenu::on_bt_mm_clicked() //кнопка быстрая игра
     //REF_CLIENT.setGroupMenu();
     //REF_CLIENT.getGroupMenu()->setCurrentIndex_(1);
 }
+
+void MainMenu::on_bt_settings_clicked()
+{
+    REF_CLIENT.getMainWindow()->setCurrentWidget_(REF_CLIENT.getFormSett());
+}

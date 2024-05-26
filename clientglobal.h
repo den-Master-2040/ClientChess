@@ -20,6 +20,7 @@ struct group{
 #include "form_game.h"
 #include "form_user.h"
 #include "form_pass.h"
+#include "form_settings.h"
 
 //Данный класс управляет всеми объектами клиента.
 //Здесь можно получить доступ к любому объекту из любого объекта.
@@ -42,6 +43,7 @@ public:
     Form_game      * getFormGame   ();
     Form_user      * getFormUser   ();
     Form_pass      * getFormPass   ();
+    Form_settings  * getFormSett   ();
 
 
     void setMainMenu    ();
@@ -61,6 +63,8 @@ private:
     Form_game      * createFormGame   ();
     Form_user      * createFormUser   ();
     Form_pass      * createFormPass   ();
+    Form_settings  * createFormSett   ();
+
 
     //объекты форм - единственные в своем роде, копий не может и не должно быть!
     MainWindow     * mainwindow  = nullptr;
@@ -70,6 +74,7 @@ private:
     Form_game      * game        = nullptr;
     Form_user      * form_user   = nullptr;
     Form_pass      * pass        = nullptr;
+    Form_settings  * settings    = nullptr;
 
 
     //объект работы с сетью

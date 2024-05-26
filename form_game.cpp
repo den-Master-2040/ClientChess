@@ -38,9 +38,9 @@ void Form_game::setPlayerMap()
             item->beMove = false;
 
             if(color_counter % 2)
-                item->color = Qt::lightGray;
+                item->color = whiteMap;
             else
-                item->color = QColor(0x79,0x5c,0x32);
+                item->color = blackMap;
 
             scene->addItem(item);   // Добавляем элемент на графическую сцену
             chessMap.push_back(item);

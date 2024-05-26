@@ -39,6 +39,8 @@ public:
     QGraphicsScene *scene;
     QString nameAnotherPlayer = "";
 
+    QColor whiteMap = Qt::lightGray;
+    QColor blackMap = QColor(0x79,0x5c,0x32);
     int numHod = 0;
     bool getIsMyHod() const;
     void setIsMyHod(bool value);

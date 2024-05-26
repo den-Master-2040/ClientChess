@@ -49,6 +49,29 @@ void Form_game::setPlayerMap()
     }
 
     color_counter = 0;
+
+    int chess_Engine_maps[8][8] = {
+        {2, 3, 4, 5, 6, 4, 3, 2},
+        {1, 1, 1, 1, 1, 1, 1, 1},
+        {0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0},
+        {7, 7, 7, 7, 7, 7, 7, 7},
+        {8, 9,10,11,12,10, 9, 8}
+    };
+
+    for(int i = 0; i < 8; i++)
+    {
+        color_counter++;
+        for(int j = 0; j < 8; j++)
+        {
+            //на всякий случай подчишаем карту нашего движка
+            m_chess.chess_Engine_map[i][j] = chess_Engine_maps[i][j];
+        }
+    }
+
+
     for(int i = 0; i < 8; i++)
     {
         color_counter++;
@@ -73,7 +96,7 @@ void Form_game::setPlayerMap()
                 chess->beMove=true;
                 chess->name = QString::number(num_figure);
                 chess->setPos(SIZECELL*i,SIZECELL*j);
-                chess->scene = scene;
+                //chess->scene = scene;
                 scene->addItem(chess);   // Добавляем элемент на графическую сцену
 
                 chessMap.push_back(chess);
@@ -121,9 +144,17 @@ void Form_game::appendStoreHods(QString hode)
 
 void Form_game::clearMap()
 {
-    scene->clear();
+    qDebug() << "clear!";
+    for(int i = 0; i < chessMap.size(); i++)
+    {
+
+        qDebug() << "i = " << i;
+        scene->removeItem(scene->itemAt(QPoint(chessMap.at(i)->row*SIZECELL,chessMap.at(i)->col*SIZECELL),QTransform()));
+
+    }
     chessMap.clear();
     numHod = 0;
+    ui->textBrowser->clear();
 
 }
 
@@ -142,9 +173,11 @@ void Form_game::setNameTeame(QString name)
 
 void Form_game::on_pushButton_clicked()
 {
-    REF_CLIENT.getNetworkObj()->SendToServer("DG");
-    REF_CLIENT.getGroupMenu()->setCurrentIndex_(0);
+
+
     clearMap();
+    REF_CLIENT.getGroupMenu()->setCurrentIndex_(0);
     REF_CLIENT.setMainMenu();
+    REF_CLIENT.getNetworkObj()->SendToServer("DG");
 
 }

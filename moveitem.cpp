@@ -35,7 +35,7 @@ void MoveItem::setPos_(int x, int y)
                 // удаляем элемент
                 if(chessMap.at(i) != this){
                     checkDeleteItem(i);
-                    scene->removeItem(chessMap.at(i));
+                    this->scene()->removeItem(chessMap.at(i));
                     chessMap.remove(i);
                     qDebug() << "QVector<MoveItem*> x = " << x*SIZECELL << "y = "<< y*SIZECELL;
                     break;
@@ -283,7 +283,7 @@ void MoveItem::setPosToCell()
 
                     if(chessMap.at(i) != this && !validDeleteItem(chessMap.at(i)->name.toInt()) ){//isValid team -
                         checkDeleteItem(i);
-                        scene->removeItem(chessMap.at(i)); //удаляем элемент
+                        this->scene()->removeItem(chessMap.at(i)); //удаляем элемент
                         qDebug() << "delete to "<< chessMap.at(i)->col << " " << chessMap.at(i)->row;
                         chessMap.remove(i);
                         break;

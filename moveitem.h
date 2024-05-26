@@ -27,7 +27,6 @@ public:
     bool endGame = false;
 
     chess_Engine *m_chess = nullptr;
-    QGraphicsScene *scene;
     void setPos_(int x, int y);
 
     bool validDeleteItem(int number);

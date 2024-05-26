@@ -10,7 +10,7 @@ network_object::network_object(QObject *parent) : QObject(parent)
     {
         if(socket->state()!=QTcpSocket::ConnectedState)
         {
-            socket->connectToHost("127.0.0.1", 2323);
+            socket->connectToHost("192.168.1.65", 2323);
             SendToServer("Login, my login=" + REF_CLIENT.getUserData()->getName() + " my token=" + REF_CLIENT.getUserData()->getPasword() + " ");
             REF_CLIENT.getMainmenu()->setConnections(false);
         }
@@ -122,9 +122,12 @@ void network_object::RequaredRecvMessage(QString message)
             {
                 if(REF_CLIENT.getMainWindow()->getCurrentWidget_() == REF_CLIENT.getFormGame())
                 {
+
+                    REF_CLIENT.getFormGame()->clearMap();
                     REF_CLIENT.getFormGame()->chessMap.clear();
                     REF_CLIENT.getFormGame()->scene->clear();
-                    REF_CLIENT.getFormGame()->clearMap();
+                    REF_CLIENT.getGroupMenu()->setCurrentIndex_(0);
+                    REF_CLIENT.getNetworkObj()->SendToServer("DG");
                     REF_CLIENT.setMainMenu();
                     break;
                 }

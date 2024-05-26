@@ -93,6 +93,5 @@ void Form_group::on_pushButton_3_clicked()
 
 void Form_group::keyPressEvent(QKeyEvent *event)
 {
-    qDebug() << event->key();
     if(event->key() == 16777220) on_pushButton_clicked();
 }

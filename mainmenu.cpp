@@ -61,6 +61,6 @@ void MainMenu::on_bt_profile_clicked()//кнопка профиль
 void MainMenu::on_bt_mm_clicked() //кнопка быстрая игра
 {
     REF_CLIENT.getNetworkObj()->SendToServer("FG");//fast game
-    REF_CLIENT.setGroupMenu();
-    REF_CLIENT.getGroupMenu()->setCurrentIndex_(1);
+    //REF_CLIENT.setGroupMenu();
+    //REF_CLIENT.getGroupMenu()->setCurrentIndex_(1);
 }

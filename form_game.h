@@ -47,6 +47,16 @@ public:
     void setWinLos(QString value);
     void appendStoreHods(QString hode);
     void clearMap();
+
+    void startPlay();
+    void stopPlay();
+    void continuePlay();
+
+    QTimer *t_timehod = nullptr;
+    QTimer *t_numbertimer = nullptr;
+
+    int timehod = 0;
+
 private slots:
     void on_pushButton_clicked();
 

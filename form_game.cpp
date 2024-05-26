@@ -158,6 +158,17 @@ void Form_game::clearMap()
 
 }
 
+void Form_game::startPlay()
+{
+    t_timehod = new QTimer();
+    t_numbertimer = new QTimer();
+    connect(t_timehod, &QTimer::timeout, [](){
+
+    });
+
+    t_timehod->start(timehod);
+}
+
 void Form_game::moveItem_(int numberItem, int x, int y)
 {
     setIsMyHod(true);

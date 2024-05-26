@@ -10,7 +10,7 @@ network_object::network_object(QObject *parent) : QObject(parent)
     {
         if(socket->state()!=QTcpSocket::ConnectedState)
         {
-            socket->connectToHost("127.0.0.1", 2323);
+            socket->connectToHost("89.179.126.139", 2323);
             SendToServer("Login, my login=" + REF_CLIENT.getUserData()->getName() + " my token=" + REF_CLIENT.getUserData()->getPasword() + " ");
             REF_CLIENT.getMainmenu()->setConnections(false);
         }

@@ -66,6 +66,12 @@ Form_user *ClientGlobal::createFormUser()
     return form_user;
 }
 
+Form_pass *ClientGlobal::createFormPass()
+{
+    pass = new Form_pass();
+    return pass;
+}
+
 MainMenu* ClientGlobal::getMainmenu()
 {
     ClientGlobal & instanse  = getInstance();
@@ -166,6 +172,21 @@ Form_user *ClientGlobal::getFormUser()
         qDebug() << "return";
         instanse.createFormUser();
         return instanse.form_user;
+    }
+}
+
+Form_pass *ClientGlobal::getFormPass()
+{
+    ClientGlobal & instanse  = getInstance();
+    if(instanse.pass != nullptr)
+    {
+        return instanse.pass;
+    }
+    else
+    {
+        qDebug() << "return";
+        instanse.createFormPass();
+        return instanse.pass;
     }
 }
 

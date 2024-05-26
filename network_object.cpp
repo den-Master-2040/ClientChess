@@ -155,6 +155,8 @@ void network_object::RequaredRecvMessage(QString message)
                     else break;
 
                 qDebug() << "login_secondUser: " << lsu;
+                REF_CLIENT.setGroupMenu();
+                REF_CLIENT.joinGroup();
                 REF_CLIENT.getGroupMenu()->connectUser(lsu);
                 QString namegroup;
                 for(i++; i < message.size(); i++)
@@ -203,6 +205,11 @@ void network_object::RequaredRecvMessage(QString message)
                 REF_CLIENT.getFormGame()->setIsMyHod(false);
                 REF_CLIENT.getFormGame()->setNameTeame("Вы играете за черных");
             }
+            break;
+        }
+        case 'F':
+        {
+            qDebug() << "FAIL PASS";
             break;
         }
 

@@ -31,9 +31,9 @@ void MoveItem::setPos_(int x, int y)
         if(chessMap.at(i)->col  == x)
             if((chessMap.at(i)->row  == y) && chessMap.at(i)->beMove)
             {
-
                 // удаляем элемент
-                if(chessMap.at(i) != this){
+                if(chessMap.at(i) != this)
+                {
                     checkDeleteItem(i);
                     this->scene()->removeItem(chessMap.at(i));
                     chessMap.remove(i);

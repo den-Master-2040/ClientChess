@@ -173,11 +173,8 @@ void Form_game::setNameTeame(QString name)
 
 void Form_game::on_pushButton_clicked()
 {
-
-
     clearMap();
     REF_CLIENT.getGroupMenu()->setCurrentIndex_(0);
     REF_CLIENT.setMainMenu();
     REF_CLIENT.getNetworkObj()->SendToServer("DG");
-
 }

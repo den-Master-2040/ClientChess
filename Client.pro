@@ -21,6 +21,8 @@ SOURCES += \
     form_game.cpp \
     form_group.cpp \
     form_groups.cpp \
+    form_pass.cpp \
+    form_settings.cpp \
     form_user.cpp \
     main.cpp \
     mainmenu.cpp \
@@ -35,6 +37,8 @@ HEADERS += \
     form_game.h \
     form_group.h \
     form_groups.h \
+    form_pass.h \
+    form_settings.h \
     form_user.h \
     mainmenu.h \
     mainwindow.h \
@@ -46,6 +50,8 @@ FORMS += \
     form_game.ui \
     form_group.ui \
     form_groups.ui \
+    form_pass.ui \
+    form_settings.ui \
     form_user.ui \
     mainmenu.ui \
     mainwindow.ui

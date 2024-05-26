@@ -8,6 +8,8 @@ Form_group::Form_group(QWidget *parent) :
     ui(new Ui::Form_group)
 {
     ui->setupUi(this);
+    ui->label_7->setVisible(false);
+    ui->label_8->setVisible(false);
 }
 
 Form_group::~Form_group()
@@ -80,6 +82,22 @@ void Form_group::on_pushButton_4_clicked()
 
 void Form_group::on_pb_create_group_clicked()
 {
+    if(ui->lineEdit->text() == "")
+    {
+        ui->label_7->setVisible(true);
+
+        return;
+    }
+
+    if(ui->lineEdit_2->text()=="" && ui->radioButton->isChecked())
+    {
+        ui->label_8->setVisible(true);
+        return;
+    }
+
+    ui->label_7->setVisible(false);
+    ui->label_8->setVisible(false);
+
     REF_CLIENT.getNetworkObj()->SendToServer("C " + ui->lineEdit->text() + " " + (ui->lineEdit_2->text().size() > 0 ? ui->lineEdit_2->text() : " "));
 }
 
@@ -101,4 +119,19 @@ void Form_group::on_pushButton_3_clicked()
 void Form_group::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == 16777220) on_pushButton_clicked();
+}
+
+void Form_group::on_radioButton_clicked()
+{
+    if(!ui->radioButton->isChecked())
+    {
+        ui->lineEdit_2->setEnabled(false);
+        ui->lineEdit_2->setVisible(false);
+        ui->lineEdit_2->setText("");
+    }
+    else
+    {
+        ui->lineEdit_2->setVisible(true);
+        ui->lineEdit_2->setEnabled(true);
+    }
 }

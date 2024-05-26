@@ -71,11 +71,13 @@ void form_groups::setDataGroup(QVector<group> &groups)
         ui->gridLayout_3->addWidget(pb, i+1, 3, 1, 1);
         pushButtons.push_back(pb);
 
-        connect(pb, &QPushButton::clicked,[this,i,name_group,size_player,id,pb, groups](){
-
-            REF_CLIENT.setGroupMenu();
-            REF_CLIENT.joinGroup();
-            REF_CLIENT.getNetworkObj()->SendToServer("OKC " + QString::number(groups.at(i).id)); //get gpoup
+        connect(pb, &QPushButton::clicked,[this,i,name_group,size_player,id,pb, groups]()
+        {
+            //REF_CLIENT.setGroupMenu();
+            //REF_CLIENT.joinGroup();
+            //REF_CLIENT.getNetworkObj()->SendToServer("OKC " + QString::number(groups.at(i).id)); //get gpoup
+            REF_CLIENT.getFormPass()->id = groups.at(i).id;
+            REF_CLIENT.getMainWindow()->setCurrentWidget_(REF_CLIENT.getFormPass());
         });
 
 

@@ -182,7 +182,7 @@ void Form_game::setNameTeame(QString name)
     ui->label_2->setText(name);
 }
 
-void Form_game::on_pushButton_clicked()
+void Form_game::on_pushButton_clicked() //выход
 {
     clearMap();
     REF_CLIENT.getGroupMenu()->setCurrentIndex_(0);

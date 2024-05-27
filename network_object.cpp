@@ -24,6 +24,8 @@ network_object::network_object(QObject *parent) : QObject(parent)
 
 void network_object::SendToServer(QString str)
 {
+    str.push_front(0x02);
+    str.append(0x03);
     Data.clear();
     QDataStream out (&Data, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_9);
@@ -225,6 +227,8 @@ void network_object::loginToHost()
 
 void network_object::slotReadyRead()
 {
+
+    qDebug() << "socket->readBufferSize(): " << socket->readBufferSize();
     QDataStream in(socket);
     in.setVersion(QDataStream::Qt_5_9);
     if(in.status() == QDataStream::Ok)
@@ -239,4 +243,5 @@ void network_object::slotReadyRead()
     {
         qDebug() << "fail to read message for QDataStream!";
     }
+
 }

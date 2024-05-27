@@ -3,7 +3,7 @@
 #include "clientglobal.h"
 network_object::network_object(QObject *parent) : QObject(parent)
 {
-    socket = new QTcpSocket(this);
+    socket = new QSslSocket(this);
     connect(socket, &QTcpSocket::readyRead, this, &network_object::slotReadyRead);
     t_connectToHost = new QTimer();
     connect(t_connectToHost, &QTimer::timeout, [this]()

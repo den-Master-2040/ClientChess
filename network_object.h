@@ -4,7 +4,7 @@
 #include <QTcpSocket>
 #include <QObject>
 #include <QTimer>
-
+#include <QSslSocket>
 
 
 class network_object : public QObject
@@ -20,7 +20,7 @@ public:
 
 
     QByteArray Data;
-    QTcpSocket *socket= nullptr;
+    QSslSocket *socket= nullptr;
     int mysocketDescriptor = -1; // дескриптор который присвоил нам сервер
 
     QTimer *t_result_ping = nullptr;

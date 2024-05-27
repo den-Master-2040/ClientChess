@@ -1,10 +1,10 @@
 #ifndef NETWORK_OBJECT_H
 #define NETWORK_OBJECT_H
 
-#include <QTcpSocket>
+#include <QSslSocket>
 #include <QObject>
 #include <QTimer>
-#include <QSslSocket>
+
 
 
 class network_object : public QObject

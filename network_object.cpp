@@ -4,13 +4,14 @@
 network_object::network_object(QObject *parent) : QObject(parent)
 {
     socket = new QSslSocket(this);
-    connect(socket, &QTcpSocket::readyRead, this, &network_object::slotReadyRead);
+    connect(socket, &QSslSocket::readyRead, this, &network_object::slotReadyRead);
     t_connectToHost = new QTimer();
     connect(t_connectToHost, &QTimer::timeout, [this]()
     {
-        if(socket->state()!=QTcpSocket::ConnectedState)
+        if(socket->state()!=QSslSocket::ConnectedState)
         {
-            socket->connectToHost("89.179.126.139", 2323);
+            socket->ignoreSslErrors();
+            socket->connectToHostEncrypted("127.0.0.1", 2323);
             SendToServer("Login, my login=" + REF_CLIENT.getUserData()->getName() + " my token=" + REF_CLIENT.getUserData()->getPasword() + " ");
             REF_CLIENT.getMainmenu()->setConnections(false);
         }
@@ -31,8 +32,10 @@ void network_object::SendToServer(QString str)
     out.setVersion(QDataStream::Qt_5_9);
     out << str;
 
-    //if(socket->state() == QTcpSocket::ConnectedState)
+    if(socket->state() == QSslSocket::ConnectedState){
         socket->write(Data);
+        qDebug() << str;
+    }
 }
 
 void network_object::RequaredRecvMessage(QString message)

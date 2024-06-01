@@ -137,18 +137,22 @@ void MoveItem::checkDeleteItem(int i)
         if(REF_CLIENT.getUserData()->getTeam() == "black")
         {
             //это победа потому что 6 - НЕ наш король
-            qDebug() << "вы одержали победу, мьсе";
+            //qDebug() << "вы одержали победу, мьсе";
+            REF_CLIENT.getUserData()->countWin++;
+            REF_CLIENT.getUserData()->countFihgtFugure++;
             REF_CLIENT.getFormGame()->setWinLos("Вы победили!");
         }
         else if(REF_CLIENT.getUserData()->getTeam() == "white")
         {
             //это поражение, так как 6 - наш король
-            qDebug() << "вы проиграли, мьсе";
+            //qDebug() << "вы проиграли, мьсе";
+            REF_CLIENT.getUserData()->countDef++;
             REF_CLIENT.getFormGame()->setWinLos("Вы проиграли");
         }
         endGame = true;
 
     }
+    REF_CLIENT.getUserData()->sendUserData();
 }
 
 QRectF MoveItem::boundingRect() const
@@ -286,6 +290,7 @@ void MoveItem::setPosToCell()
                         this->scene()->removeItem(chessMap.at(i)); //удаляем элемент
                         qDebug() << "delete to "<< chessMap.at(i)->col << " " << chessMap.at(i)->row;
                         chessMap.remove(i);
+                        REF_CLIENT.getUserData()->countFihgtFugure++;
                         break;
                     }
                 }
@@ -300,6 +305,7 @@ void MoveItem::setPosToCell()
                                                        + QString::number(row));
         oldcol = row;
         oldrow = col;
+        REF_CLIENT.getUserData()->countHod++;
     }
     else
        this->setPos(QPointF(oldrow*SIZECELL,oldcol*SIZECELL));

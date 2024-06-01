@@ -52,6 +52,8 @@ public:
     void stopPlay();
     void continuePlay();
 
+    void setNameLb(QString anotherPlayer, QString yourLogin);
+
     QTimer *t_timehod = nullptr;
     QTimer *t_numbertimer = nullptr;
 

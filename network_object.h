@@ -24,6 +24,7 @@ public:
     int mysocketDescriptor = -1; // дескриптор который присвоил нам сервер
 
     QTimer *t_result_ping = nullptr;
+    QTimer *t_readSocket = nullptr;
     QTimer *t_connectToHost = nullptr;
     QString lastMessage;
     QString login = "DEN_CHIK_";
@@ -31,6 +32,7 @@ public:
     int size_users = -1;
     QString messageToUser;
     QString hod;
+    bool encrypted = false;
 signals:
 public slots:
     void slotReadyRead();

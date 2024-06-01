@@ -2,12 +2,15 @@
 #define USERDATA_H
 
 #include <QObject>
-
+#include <QFile>
 class UserData : public QObject
 {
     Q_OBJECT
 public:
+
     explicit UserData(QObject *parent = nullptr);
+
+    void loginingAutherization();
 
     QString getName() const;
     void setName(const QString &value);
@@ -18,10 +21,21 @@ public:
     QString getTeam() const;
     void setTeam(const QString &value);
 
+    void sendUserData();
+
+    int countHod          = 0; //всего количество ходов
+    int countFihgtFugure  = 0;//уничтоженные фигуры
+    int levelUser         = 0;
+    int countWin          = 0;//победы
+    int countDef          = 0;//поражения
+    int countDraw         = 0;//ничьи
+
 private:
-    QString name = "NEWCLIENTDEN";
+    QFile fileLogPass;
+    QString name    = "NEWCLIENTDEN";
     QString pasword = "";
-    QString team = "";
+    QString team    = "";
+
 
 };
 

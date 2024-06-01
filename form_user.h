@@ -14,6 +14,7 @@ class Form_user : public QWidget
 public:
     explicit Form_user(QWidget *parent = nullptr);
     ~Form_user();
+    void updateStatistics();
 
 private slots:
     void on_pushButton_clicked();
@@ -21,6 +22,8 @@ private slots:
     void on_lineEdit_editingFinished();
 
     void on_lineEdit_2_editingFinished();
+
+
 
 private:
     Ui::Form_user *ui;

@@ -21,6 +21,8 @@ struct group{
 #include "form_user.h"
 #include "form_pass.h"
 #include "form_settings.h"
+#include "form_logReg.h"
+
 
 //Данный класс управляет всеми объектами клиента.
 //Здесь можно получить доступ к любому объекту из любого объекта.
@@ -34,16 +36,17 @@ public:
 
     void initialization ();
 
-    MainWindow     * getMainWindow ();
-    MainMenu       * getMainmenu   ();
-    Form_group     * getGroupMenu  ();
-    network_object * getNetworkObj ();
-    form_groups    * getGroupsMenu ();
-    UserData       * getUserData   ();
-    Form_game      * getFormGame   ();
-    Form_user      * getFormUser   ();
-    Form_pass      * getFormPass   ();
-    Form_settings  * getFormSett   ();
+    MainWindow          * getMainWindow ();
+    MainMenu            * getMainmenu   ();
+    Form_group          * getGroupMenu  ();
+    network_object      * getNetworkObj ();
+    form_groups         * getGroupsMenu ();
+    UserData            * getUserData   ();
+    Form_game           * getFormGame   ();
+    Form_user           * getFormUser   ();
+    Form_pass           * getFormPass   ();
+    Form_settings       * getFormSett   ();
+    Form_logReg         * getFormLogin  ();
 
 
     void setMainMenu    ();
@@ -54,27 +57,29 @@ public:
 
 private:
 
-    MainWindow     * createMainWindow ();
-    MainMenu       * createMainmenu   ();
-    Form_group     * createGroup      ();
-    network_object * createNetworkObj ();
-    form_groups    * createGroups     ();
-    UserData       * createUserData   ();
-    Form_game      * createFormGame   ();
-    Form_user      * createFormUser   ();
-    Form_pass      * createFormPass   ();
-    Form_settings  * createFormSett   ();
+    MainWindow          * createMainWindow ();
+    MainMenu            * createMainmenu   ();
+    Form_group          * createGroup      ();
+    network_object      * createNetworkObj ();
+    form_groups         * createGroups     ();
+    UserData            * createUserData   ();
+    Form_game           * createFormGame   ();
+    Form_user           * createFormUser   ();
+    Form_pass           * createFormPass   ();
+    Form_settings       * createFormSett   ();
+    Form_logReg         * createFormLogin  ();
 
 
     //объекты форм - единственные в своем роде, копий не может и не должно быть!
-    MainWindow     * mainwindow  = nullptr;
-    MainMenu       * mainmenu    = nullptr;
-    Form_group     * group       = nullptr;
-    form_groups    * groups      = nullptr;
-    Form_game      * game        = nullptr;
-    Form_user      * form_user   = nullptr;
-    Form_pass      * pass        = nullptr;
-    Form_settings  * settings    = nullptr;
+    MainWindow          * mainwindow  = nullptr;
+    MainMenu            * mainmenu    = nullptr;
+    Form_group          * group       = nullptr;
+    form_groups         * groups      = nullptr;
+    Form_game           * game        = nullptr;
+    Form_user           * form_user   = nullptr;
+    Form_pass           * pass        = nullptr;
+    Form_settings       * settings    = nullptr;
+    Form_logReg         * formlogin   = nullptr;
 
 
     //объект работы с сетью

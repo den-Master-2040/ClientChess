@@ -13,7 +13,8 @@ network_object::network_object(QObject *parent) : QObject(parent)
             socket->ignoreSslErrors();
             socket->connectToHostEncrypted("89.179.126.139", 2323);
             connect(socket, &QSslSocket::encrypted, [this](){
-                SendToServer("Login, my login=" + REF_CLIENT.getUserData()->getName() + " my token=" + REF_CLIENT.getUserData()->getPasword() + " ");
+                //можно отправлять данные
+                encrypted = true;
             });
             REF_CLIENT.getMainmenu()->setConnections(false);
         }
@@ -23,6 +24,14 @@ network_object::network_object(QObject *parent) : QObject(parent)
         }
     });
     t_connectToHost->start(1);
+
+    t_readSocket = new QTimer();
+    connect(t_readSocket, &QTimer::timeout, [this]()
+    {
+        if(encrypted)
+            slotReadyRead();
+    });
+    t_readSocket->start(300);
 }
 
 void network_object::SendToServer(QString str)
@@ -198,8 +207,11 @@ void network_object::RequaredRecvMessage(QString message)
         {
             if(message.at(1) == 'O')
             {
+                REF_CLIENT.getFormGame()->setNameLb(REF_CLIENT.getGroupMenu()->nameAnotherPlayer,REF_CLIENT.getUserData()->getName());
+
                 REF_CLIENT.getFormGame()->setPlayerMap();
                 REF_CLIENT.getMainWindow()->setCurrentWidget_(REF_CLIENT.getFormGame());
+
             }
             if(message.at(2) == 'W'){
                 REF_CLIENT.getUserData()->setTeam("white");
@@ -219,7 +231,141 @@ void network_object::RequaredRecvMessage(QString message)
             qDebug() << "FAIL PASS";
             break;
         }
+        case 'S':
+        {
+            if(message.at(1) == "L")
+            {
+                //succesfulLogin
+                REF_CLIENT.getFormLogin()->succesfulLogin();
+                REF_CLIENT.setMainMenu();
+                SendToServer("II");
+            }
+            break;
 
+        }
+        case 'N':
+        {
+            if(message.at(1) == "L")
+            {
+                //NotLogin
+                REF_CLIENT.getFormLogin()->viewFalseLogPass();
+            }
+            break;
+        }
+        case 'U':
+        {
+            if(message.at(1) == 'D')
+            {
+                QString countHod;
+                int i = 3;
+                for(; i < message.size(); i++)
+                {
+                    if(message[i] != ' ')
+                    {
+                        countHod += message[i];
+                    }
+                    else break;
+                }
+                REF_CLIENT.getUserData()->countHod = countHod.toInt();
+                i++;
+                QString countFihgtFugure;
+                for(; i < message.size(); i++)
+                {
+                    if(message[i] != ' ')
+                    {
+                        countFihgtFugure += message[i];
+                    }
+                    else break;
+                }
+                REF_CLIENT.getUserData()->countFihgtFugure = countFihgtFugure.toInt();
+                i++;
+                QString levelUser;
+                for(; i < message.size(); i++)
+                {
+                    if(message[i] != ' ')
+                    {
+                        levelUser += message[i];
+                    }
+                    else break;
+                }
+                REF_CLIENT.getUserData()->levelUser = levelUser.toInt();
+                i++;
+                QString countWin;
+                for(; i < message.size(); i++)
+                {
+                    if(message[i] != ' ')
+                    {
+                        countWin += message[i];
+                    }
+                    else break;
+                }
+                REF_CLIENT.getUserData()->countWin = countWin.toInt();
+                i++;
+                QString countDef;
+                for(; i < message.size(); i++)
+                {
+                    if(message[i] != ' ')
+                    {
+                        countDef += message[i];
+                    }
+                    else break;
+                }
+                REF_CLIENT.getUserData()->countDef = countDef.toInt();
+                i++;
+                QString countDraw;
+                for(; i < message.size(); i++)
+                {
+                    if(message[i] != ' ')
+                    {
+                        countDraw += message[i];
+                    }
+                    else break;
+                }
+                REF_CLIENT.getUserData()->countDraw = countDraw.toInt();
+                REF_CLIENT.getFormUser()->updateStatistics();
+
+            }
+        }
+        case 'M':
+        {
+
+            if(message.at(1) == 'M')
+            {
+                QString lsu;
+                int i = 4;
+                for(; i < message.size(); i++)
+                    if(message.at(i) != ' ')
+                        lsu += message.at(i);
+                    else break;
+
+                qDebug() << "login_secondUser: " << lsu;
+                REF_CLIENT.setGroupMenu();
+                REF_CLIENT.joinGroup();
+                REF_CLIENT.getGroupMenu()->connectUser(lsu);
+                QString namegroup;
+                for(i++; i < message.size(); i++)
+                {
+                    namegroup+=message.at(i);
+                }
+                REF_CLIENT.getGroupMenu()->setNameGroup(namegroup);
+
+                REF_CLIENT.getFormGame()->setNameLb(REF_CLIENT.getGroupMenu()->nameAnotherPlayer,REF_CLIENT.getUserData()->getName());
+
+                REF_CLIENT.getFormGame()->setPlayerMap();
+                REF_CLIENT.getMainWindow()->setCurrentWidget_(REF_CLIENT.getFormGame());
+            }
+            if(message.at(2) == 'W'){
+                REF_CLIENT.getUserData()->setTeam("white");
+                REF_CLIENT.getFormGame()->setIsMyHod(true);
+                REF_CLIENT.getFormGame()->setNameTeame("Вы играете за белых");
+            }
+            if(message.at(2) == 'B')
+            {
+                REF_CLIENT.getUserData()->setTeam("black");
+                REF_CLIENT.getFormGame()->setIsMyHod(false);
+                REF_CLIENT.getFormGame()->setNameTeame("Вы играете за черных");
+            }
+        }
 
         default:break;
     }
@@ -242,7 +388,8 @@ void network_object::slotReadyRead()
         QString str;
         in >> str;
         lastMessage = str;
-        RequaredRecvMessage(str);
+        if(str != "")
+            RequaredRecvMessage(str);
     }
     else
     {

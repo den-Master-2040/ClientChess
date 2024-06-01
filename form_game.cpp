@@ -21,6 +21,7 @@ Form_game::Form_game(QWidget *parent) :
 
 Form_game::~Form_game()
 {
+
     delete ui;
 }
 
@@ -167,6 +168,12 @@ void Form_game::startPlay()
     });
 
     t_timehod->start(timehod);
+}
+
+void Form_game::setNameLb(QString anotherPlayer, QString yourLogin)
+{
+    ui->yourLogin->setText(yourLogin);
+    ui->hesLogin->setText(anotherPlayer);
 }
 
 void Form_game::moveItem_(int numberItem, int x, int y)

@@ -30,3 +30,12 @@ void Form_user::on_lineEdit_2_editingFinished()
 {
     REF_CLIENT.getUserData()->setPasword(ui->lineEdit_2->text());
 }
+
+void Form_user::updateStatistics()
+{
+    ui->countHod->setText(QString::number(REF_CLIENT.getUserData()->countHod));
+    ui->countFihgtFugure->setText(QString::number(REF_CLIENT.getUserData()->countFihgtFugure));
+    ui->levelUser->setText(QString::number(REF_CLIENT.getUserData()->levelUser));
+    ui->countWin->setText(QString::number(REF_CLIENT.getUserData()->countWin));
+    ui->countDef->setText(QString::number(REF_CLIENT.getUserData()->countDef));
+}

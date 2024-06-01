@@ -78,6 +78,12 @@ Form_settings *ClientGlobal::createFormSett()
     return settings;
 }
 
+Form_logReg *ClientGlobal::createFormLogin()
+{
+    formlogin = new Form_logReg;
+    return formlogin;
+}
+
 MainMenu* ClientGlobal::getMainmenu()
 {
     ClientGlobal & instanse  = getInstance();
@@ -211,6 +217,21 @@ Form_settings *ClientGlobal::getFormSett()
     }
 }
 
+Form_logReg *ClientGlobal::getFormLogin()
+{
+    ClientGlobal & instanse  = getInstance();
+    if(instanse.formlogin != nullptr)
+    {
+        return instanse.formlogin;
+    }
+    else
+    {
+        qDebug() << "return";
+        instanse.createFormLogin();
+        return instanse.formlogin;
+    }
+}
+
 ClientGlobal &ClientGlobal::getInstance()
 {
     static std::unique_ptr<ClientGlobal> instanse (new ClientGlobal());
@@ -233,6 +254,8 @@ void ClientGlobal::initialization()
         createNetworkObj();
     if(groups == nullptr)
         createGroups();
+
+
 }
 
 void ClientGlobal::setMainMenu()

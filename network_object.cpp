@@ -11,7 +11,8 @@ network_object::network_object(QObject *parent) : QObject(parent)
         if(socket->state()!=QSslSocket::ConnectedState)
         {
             socket->ignoreSslErrors();
-            socket->connectToHostEncrypted("89.179.126.139", 2323);
+            socket->connectToHostEncrypted(ip, port);
+            qDebug()<< "ip: " << ip << " port: " << port;
             connect(socket, &QSslSocket::encrypted, [this](){
                 //можно отправлять данные
                 encrypted = true;
@@ -23,7 +24,7 @@ network_object::network_object(QObject *parent) : QObject(parent)
             REF_CLIENT.getMainmenu()->setConnections(true);
         }
     });
-    t_connectToHost->start(1);
+    //t_connectToHost->start(1);
 
     t_readSocket = new QTimer();
     connect(t_readSocket, &QTimer::timeout, [this]()
@@ -420,6 +421,14 @@ void network_object::RequaredRecvMessage(QString message)
 void network_object::loginToHost()
 {
     SendToServer("Login, my login=" + login + " my token=" + token + " ");
+}
+
+void network_object::setipport(QString ip, int port)
+{
+    //t_connectToHost->stop();
+    this->ip = ip;
+    this->port = port;
+    t_connectToHost->start(1);
 }
 
 void network_object::slotReadyRead()

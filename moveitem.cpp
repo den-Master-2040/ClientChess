@@ -153,6 +153,7 @@ void MoveItem::checkDeleteItem(int i)
 
     }
     REF_CLIENT.getUserData()->sendUserData();
+    REF_CLIENT.getNetworkObj()->SendToServer("ST");
 }
 
 QRectF MoveItem::boundingRect() const

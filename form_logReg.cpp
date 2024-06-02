@@ -57,3 +57,18 @@ void Form_logReg::on_pushButton_2_clicked()
     lastPass = password;
     REF_CLIENT.getNetworkObj()->SendToServer("REG " + login + " " + password);
 }
+
+void Form_logReg::on_pushButton_5_clicked()
+{
+    REF_CLIENT.getNetworkObj()->setipport(ui->lineEdit_5->text(), ui->lineEdit_6->text().toInt());
+}
+
+void Form_logReg::on_pushButton_6_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+}
+
+void Form_logReg::on_pushButton_7_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}

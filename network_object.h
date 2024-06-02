@@ -17,6 +17,7 @@ public:
     void RequaredRecvMessage(QString message);
 
     void loginToHost();
+    void setipport(QString ip, int port);
 
 
     QByteArray Data;
@@ -25,6 +26,8 @@ public:
 
     QTimer *t_result_ping = nullptr;
     QTimer *t_readSocket = nullptr;
+    QString ip = "89.179.126.138";
+    int port = 2323;
     QTimer *t_connectToHost = nullptr;
     QString lastMessage;
     QString login = "DEN_CHIK_";

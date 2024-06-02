@@ -1,4 +1,4 @@
-#include "network_object.h"
+﻿#include "network_object.h"
 #include "QDataStream"
 #include "clientglobal.h"
 network_object::network_object(QObject *parent) : QObject(parent)
@@ -88,6 +88,7 @@ void network_object::RequaredRecvMessage(QString message)
                 QVector<group> groups;
                 group lg;
                 //groups.clear();
+                int countUsers = 1;
                 for(int i = 0; i < message.size(); i++)
                 {
 
@@ -121,6 +122,8 @@ void network_object::RequaredRecvMessage(QString message)
                         lg.name_first_user = user_login;
 
                     }
+
+
                     if(lg.id != -1 && lg.name != "" && lg.name_first_user != "")
                     {
                         groups.push_back(lg);
@@ -129,7 +132,10 @@ void network_object::RequaredRecvMessage(QString message)
                         lg.name_first_user = "";
                     }
                 }
-                REF_CLIENT.getGroupsMenu()->setDataGroup(groups);
+
+                if(message.at(message.size()-1) == '2')
+                    countUsers = 2;
+                REF_CLIENT.getGroupsMenu()->setDataGroup(groups,countUsers);
                 REF_CLIENT.setGroupsMenu();
 
             }
@@ -181,6 +187,36 @@ void network_object::RequaredRecvMessage(QString message)
                 }
                 REF_CLIENT.getGroupMenu()->setNameGroup(namegroup);
             }
+
+            if(message.at(1) == 'V')
+            {
+                QString lsu;
+                int i = 3;
+                for(; i < message.size(); i++)
+                    if(message.at(i) != ' ')
+                        lsu += message.at(i);
+                    else break;
+
+                qDebug() << "login_secondUser: " << lsu;
+                QString lsu2;
+                i++;
+                for(; i < message.size(); i++)
+                    if(message.at(i) != ' ')
+                        lsu2 += message.at(i);
+                    else break;
+
+                qDebug() << "login_firstUser: " << lsu;
+                REF_CLIENT.setGroupMenu();
+                REF_CLIENT.joinGroup();
+                REF_CLIENT.getGroupMenu()->connectWithViewers(lsu, lsu2);
+
+                QString namegroup;
+                for(i++; i < message.size(); i++)
+                {
+                    namegroup+=message.at(i);
+                }
+                REF_CLIENT.getGroupMenu()->setNameGroup(namegroup);
+            }
             break;
         }
         case 'T':
@@ -223,6 +259,12 @@ void network_object::RequaredRecvMessage(QString message)
                 REF_CLIENT.getUserData()->setTeam("black");
                 REF_CLIENT.getFormGame()->setIsMyHod(false);
                 REF_CLIENT.getFormGame()->setNameTeame("Вы играете за черных");
+            }
+            if(message.at(2) == 'V')
+            {
+                REF_CLIENT.getUserData()->setTeam("none");
+                REF_CLIENT.getFormGame()->setIsMyHod(false);
+                REF_CLIENT.getFormGame()->setNameTeame("Вы зритель");
             }
             break;
         }
@@ -366,7 +408,11 @@ void network_object::RequaredRecvMessage(QString message)
                 REF_CLIENT.getFormGame()->setNameTeame("Вы играете за черных");
             }
         }
+    case 'V':
+    {
+        //мы зритель, и нам пришёл ход
 
+    }
         default:break;
     }
 }

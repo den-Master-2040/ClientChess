@@ -15,7 +15,7 @@ form_groups::~form_groups()
     delete ui;
 }
 
-void form_groups::setDataGroup(QVector<group> &groups)
+void form_groups::setDataGroup(QVector<group> &groups, int users)
 {
 
     if(groups.size() == 0)
@@ -57,6 +57,8 @@ void form_groups::setDataGroup(QVector<group> &groups)
         ui->gridLayout_3->addWidget(id, i+1, 2, 1, 1);
         labels.push_back(id);
 
+        if(users == 1)
+        {
         QPushButton *pb;
         pb = new QPushButton(ui->scrollAreaWidgetContents_2);
         pb->setObjectName(QString::fromUtf8("pushButton_2")+QString::number(i));
@@ -69,7 +71,6 @@ void form_groups::setDataGroup(QVector<group> &groups)
                           "1 rgba(87, 87, 87, 255));\ncolor:white;;\nborder-radius: 2px;\n};\n");
 
         ui->gridLayout_3->addWidget(pb, i+1, 3, 1, 1);
-        pushButtons.push_back(pb);
 
         connect(pb, &QPushButton::clicked,[this,i,name_group,size_player,id,pb, groups]()
         {
@@ -78,6 +79,29 @@ void form_groups::setDataGroup(QVector<group> &groups)
             //REF_CLIENT.getNetworkObj()->SendToServer("OKC " + QString::number(groups.at(i).id)); //get gpoup
             REF_CLIENT.getFormPass()->id = groups.at(i).id;
             REF_CLIENT.getMainWindow()->setCurrentWidget_(REF_CLIENT.getFormPass());
+        });
+        }
+
+        QPushButton *pbv;
+        pbv = new QPushButton(ui->scrollAreaWidgetContents_2);
+        pbv->setObjectName(QString::fromUtf8("pushButton_2")+QString::number(i));
+        pbv->setText("смотреть");
+        pbv->setStyleSheet("QPushButton{\n\nbackground-color:qlineargradient(spread:pad, "
+                          "x1:0.494, y1:0.846136, x2:0.494382, y2:1, stop:0 rgba(69, 69, 69, "
+                          "255), stop:1 rgba(149, 149, 149, 255));\ncolor:white;\nborder-radius:"
+                          " 2px;\n}\nQPushButton::pressed{\n\nbackground-color:qlineargradient(spread:pad,"
+                          " x1:0.426, y1:0.800682, x2:0.427, y2:1, stop:0 rgba(37, 37, 37, 255), stop:"
+                          "1 rgba(87, 87, 87, 255));\ncolor:white;;\nborder-radius: 2px;\n};\n");
+
+        ui->gridLayout_3->addWidget(pbv, i+1, 4, 1, 1);
+
+        pushButtons.push_back(pbv);
+
+        connect(pbv, &QPushButton::clicked,[this,i,name_group,size_player,id,pbv, groups]()
+        {
+
+            REF_CLIENT.getNetworkObj()->SendToServer("V " + QString::number(groups.at(i).id)); //подключиться к группе в качестве зрителя (Viewer)
+
         });
 
 

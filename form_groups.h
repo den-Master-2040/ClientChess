@@ -18,7 +18,7 @@ class form_groups : public QWidget
 public:
     explicit form_groups(QWidget *parent = nullptr);
     ~form_groups();
-    void setDataGroup(QVector<group> &groups);
+    void setDataGroup(QVector<group> &groups, int users);
 
     QVector<QWidget*> widgetGroups;
     QVector<QLabel*> labels;

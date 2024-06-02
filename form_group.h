@@ -24,6 +24,7 @@ public:
     void disconnectAnother();
     void setCurrentIndex_(int i);
     void setNameGroup(QString name);
+    void connectWithViewers(QString name1, QString name2);
 private slots:
     void on_pushButton_2_clicked();
 

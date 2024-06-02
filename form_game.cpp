@@ -122,14 +122,25 @@ bool Form_game::getIsMyHod() const
 void Form_game::setIsMyHod(bool value)
 {
     isMyHod = value;
-    if(value)
-    {
-        ui->label->setText("Ваш ход");
+    if(REF_CLIENT.getUserData()->getTeam()!="none"){
+        if(value)
+        {
+            ui->label->setText("Ваш ход");
+        }
+        else
+        {
+            ui->label->setText("Ожидайте\nход противника");
+        }
     }
     else
-    {
-        ui->label->setText("Ожидайте\nход противника");
-    }
+        if(value)
+        {
+            ui->label->setText("Ход игрока 1");
+        }
+        else
+        {
+            ui->label->setText("Ход игрока 2");
+        }
 }
 
 void Form_game::setWinLos(QString value)

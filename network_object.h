@@ -26,7 +26,7 @@ public:
 
     QTimer *t_result_ping = nullptr;
     QTimer *t_readSocket = nullptr;
-    QString ip = "89.179.126.138";
+    QString ip = "192.168.1.65";
     int port = 2323;
     QTimer *t_connectToHost = nullptr;
     QString lastMessage;

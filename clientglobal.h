@@ -1,6 +1,7 @@
 #ifndef CLIENTGLOBAL_H
 #define CLIENTGLOBAL_H
 
+#include <QSslSocket>
 
 #include <QObject>
 

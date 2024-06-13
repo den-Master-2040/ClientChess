@@ -69,3 +69,4 @@ void MainMenu::on_bt_settings_clicked()
 {
     REF_CLIENT.getMainWindow()->setCurrentWidget_(REF_CLIENT.getFormSett());
 }
+

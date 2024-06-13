@@ -14,7 +14,7 @@ network_object::network_object(QObject *parent) : QObject(parent)
             socket->connectToHostEncrypted(ip, port);
             qDebug()<< "ip: " << ip << " port: " << port;
             connect(socket, &QSslSocket::encrypted, [this](){
-                //можно отправлять данные
+                //можно отправл[gять данные
                 encrypted = true;
             });
             REF_CLIENT.getMainmenu()->setConnections(false);
@@ -24,7 +24,7 @@ network_object::network_object(QObject *parent) : QObject(parent)
             REF_CLIENT.getMainmenu()->setConnections(true);
         }
     });
-    //t_connectToHost->start(1);
+    t_connectToHost->start(1);
 
     t_readSocket = new QTimer();
     connect(t_readSocket, &QTimer::timeout, [this]()
@@ -206,7 +206,7 @@ void network_object::RequaredRecvMessage(QString message)
                         lsu2 += message.at(i);
                     else break;
 
-                qDebug() << "login_firstUser: " << lsu;
+                qDebug() << "login_firstUser: " << lsu2;
                 REF_CLIENT.setGroupMenu();
                 REF_CLIENT.joinGroup();
                 REF_CLIENT.getGroupMenu()->connectWithViewers(lsu, lsu2);
@@ -279,9 +279,9 @@ void network_object::RequaredRecvMessage(QString message)
             if(message.at(1) == "L")
             {
                 //succesfulLogin
-                REF_CLIENT.getFormLogin()->succesfulLogin();
-                REF_CLIENT.setMainMenu();
-                SendToServer("II");
+                REF_CLIENT.getFormLogin()->succesfulLogin(); // устнавливаем логин и пароль
+                REF_CLIENT.setMainMenu();                    // устанавливаем главное окно
+                SendToServer("II");                          // запрашиваем данные 
             }
             break;
 
@@ -409,11 +409,11 @@ void network_object::RequaredRecvMessage(QString message)
                 REF_CLIENT.getFormGame()->setNameTeame("Вы играете за черных");
             }
         }
-    case 'V':
-    {
-        //мы зритель, и нам пришёл ход
-
-    }
+        case 'V':
+        {
+            //мы зритель, и нам пришёл ход
+        
+        }
         default:break;
     }
 }

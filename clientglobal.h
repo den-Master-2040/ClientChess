@@ -36,19 +36,19 @@ public:
 
     void initialization ();
 
-    MainWindow          * getMainWindow ();
-    MainMenu            * getMainmenu   ();
-    Form_group          * getGroupMenu  ();
-    network_object      * getNetworkObj ();
-    form_groups         * getGroupsMenu ();
-    UserData            * getUserData   ();
-    Form_game           * getFormGame   ();
-    Form_user           * getFormUser   ();
-    Form_pass           * getFormPass   ();
-    Form_settings       * getFormSett   ();
-    Form_logReg         * getFormLogin  ();
-
-
+    MainWindow          * getMainWindow    ();
+    MainMenu            * getMainmenu      ();
+    Form_group          * getGroupMenu     ();
+    network_object      * getNetworkObj    ();
+    form_groups         * getGroupsMenu    ();
+    UserData            * getUserData      ();
+    Form_game           * getFormGame      ();
+    Form_user           * getFormUser      ();
+    Form_pass           * getFormPass      ();
+    Form_settings       * getFormSett      ();
+    Form_logReg         * getFormLogin     ();
+    
+    
     void setMainMenu    ();
     void setGroupMenu   ();
     void setGroupsMenu  ();

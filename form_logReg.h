@@ -37,6 +37,7 @@ private slots:
 
     void on_pushButton_7_clicked();
 
+
 private:
     Ui::Form_loginRegistrate *ui;
 };

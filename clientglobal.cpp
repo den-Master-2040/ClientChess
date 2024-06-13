@@ -240,6 +240,7 @@ ClientGlobal &ClientGlobal::getInstance()
         //qDebug() << "return instance";
         return *instanse;
     }
+    
 }
 
 void ClientGlobal::initialization()

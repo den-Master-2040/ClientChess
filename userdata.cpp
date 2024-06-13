@@ -74,8 +74,9 @@ void UserData::sendUserData()
     //int countDraw         = 0;//ничьи
     QString data;
 
+
     data += "UD " + QString::number(countHod)         + " "
-                  + QString::number(countFihgtFugure) + " "
+                 + QString::number(countFihgtFugure) + " "
                   + QString::number(levelUser)        + " "
                   + QString::number(countWin)         + " "
                   + QString::number(countDef)         + " "

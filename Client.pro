@@ -14,20 +14,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
-LIBS += -LC:\Users\DANIL\Documents\secrurityTCP\ -llibcrypto-1_1-x64
-LIBS += -LC:\Users\DANIL\Documents\secrurityTCP\ -llibcrypto-3-x64
-LIBS += -LC:\Users\DANIL\Documents\secrurityTCP\ -llibssl-1_1-x64
-LIBS += -LC:\Users\DANIL\Documents\secrurityTCP\ -llibssl-3-x64
+#INSTALLS += openssl
+#LIBS += -LC:\Users\DANIL\Documents\secrurityTCP\ -llibcrypto-1_1-x64
+#LIBS += -LC:\Users\DANIL\Documents\secrurityTCP\ -llibcrypto-3-x64
+#LIBS += -LC:\Users\DANIL\Documents\secrurityTCP\ -llibssl-1_1-x64
+#LIBS += -LC:\Users\DANIL\Documents\secrurityTCP\ -llibssl-3-x64
 
 
 CONFIG(release, debug|release): openssl.path = $$OUT_PWD/release
 else:CONFIG(debug, debug|release): openssl.path = $$OUT_PWD/debug
 openssl.files += $$PWD/../openssl/*.dll
 
+include(/android_openssl/openssl.pri)
 
 
-INSTALLS += openssl
 
 SOURCES += \
     chess_engine.cpp \
@@ -79,4 +79,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    res/res.qrc
+   res/res.qrc

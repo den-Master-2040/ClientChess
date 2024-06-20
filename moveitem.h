@@ -1,6 +1,7 @@
 ﻿#ifndef MOVEITEM_H
 #define MOVEITEM_H
 #define SIZECELL 60
+#define SIZECELL 130
 
 #include <QObject>
 #include <QGraphicsItem>
